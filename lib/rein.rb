@@ -8,3 +8,4 @@ end
 RC = Rein::Constraint
 
 require 'rein/constraint/numericality'
+require 'rein/version'
