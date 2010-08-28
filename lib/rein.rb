@@ -8,6 +8,7 @@ end
 RC = Rein::Constraint
 
 require 'rein/constraint/foreign_key'
+require 'rein/constraint/inclusion'
 require 'rein/constraint/numericality'
 require 'rein/version'
 

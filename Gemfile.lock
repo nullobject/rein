@@ -1,9 +1,3 @@
-PATH
-  remote: .
-  specs:
-    rein (0.2.0)
-      activesupport (~> 3.0.0.rc)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -24,7 +18,6 @@ DEPENDENCIES
   hirb (~> 0.3.2)
   rake (~> 0.8.7)
   rcov (~> 0.9.8)
-  rein!
   rr (~> 1.0.0)
   rspec (~> 1.3.0)
   wirble (~> 0.1.3)

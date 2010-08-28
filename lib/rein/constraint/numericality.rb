@@ -9,14 +9,14 @@ module RC
     }.freeze
 
     def add_numericality_constraint(table, attribute, options = {})
+      name = "#{table}_#{attribute}"
+
       conditions = OPERATORS.slice(*options.keys).map do |key, operator|
         value = options[key]
         [attribute, operator, value].join(" ")
-      end
+      end.join(" AND ")
 
-      conditions = conditions.join(" AND ")
-
-      execute "ALTER TABLE #{table} ADD CONSTRAINT #{attribute} CHECK (#{conditions})"
+      execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
     end
   end
 end
