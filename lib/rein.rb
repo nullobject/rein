@@ -7,12 +7,14 @@ end
 
 RC = Rein::Constraint
 
+require 'rein/constraint/foreign_key'
 require 'rein/constraint/numericality'
 require 'rein/version'
 
 if defined?(ActiveRecord)
   module ActiveRecord::ConnectionAdapters
     class PostgreSQLAdapter < AbstractAdapter
+      include RC::ForeignKey
       include RC::Numericality
     end
   end
