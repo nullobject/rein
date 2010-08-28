@@ -8,7 +8,7 @@ module RC
       :less_than_or_equal_to    => :<=
     }.freeze
 
-    def add_numericality_constraint(table, attribute, options)
+    def add_numericality_constraint(table, attribute, options = {})
       conditions = OPERATORS.slice(*options.keys).map do |key, operator|
         value = options[key]
         [attribute, operator, value].join(" ")
