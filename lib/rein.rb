@@ -16,6 +16,7 @@ if defined?(ActiveRecord)
   module ActiveRecord::ConnectionAdapters
     class PostgreSQLAdapter < AbstractAdapter
       include RC::ForeignKey
+      include RC::Inclusion
       include RC::Numericality
     end
   end
