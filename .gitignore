@@ -1,2 +1,4 @@
 .bundle
 *.gem
+coverage
+coverage.data
