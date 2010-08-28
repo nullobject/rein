@@ -14,10 +14,9 @@ module RC
         [attribute, operator, value].join(" ")
       end
 
-      conditions_sql = conditions.map {|condition| "(#{condition})" }.join(" AND ")
-      conditions_sql = "(#{conditions_sql})" if conditions.length > 1
+      conditions = conditions.join(" AND ")
 
-      execute "ALTER TABLE #{table} ADD CONSTRAINT #{attribute} CHECK #{conditions_sql}"
+      execute "ALTER TABLE #{table} ADD CONSTRAINT #{attribute} CHECK (#{conditions})"
     end
   end
 end
