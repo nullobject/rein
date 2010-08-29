@@ -1,3 +1,3 @@
 module Rein
-  VERSION = "0.5.1" unless defined?(Rein::VERSION)
+  VERSION = "0.5.2" unless defined?(Rein::VERSION)
 end
