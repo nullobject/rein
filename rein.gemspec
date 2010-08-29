@@ -16,8 +16,17 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   s.rubyforge_project         = "rein"
 
-  s.add_bundler_dependencies
-
   s.files        = Dir.glob('lib/**/*') + %w(LICENSE README.md)
   s.require_path = 'lib'
+  
+  s.add_dependency 'activerecord'
+
+  s.add_development_dependency 'bundler', '~> 1.0.0'
+  s.add_development_dependency 'hirb',    '~> 0.3.2'
+  s.add_development_dependency 'rake',    '~> 0.8.7'
+  s.add_development_dependency 'rcov',    '~> 0.9.8'
+  s.add_development_dependency 'rspec',   '~> 1.3.0'
+  s.add_development_dependency 'rr',      '~> 1.0.0'
+  s.add_development_dependency 'wirble',  '~> 0.1.3'
+  
 end
