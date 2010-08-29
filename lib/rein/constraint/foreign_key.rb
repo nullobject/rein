@@ -6,13 +6,18 @@ module RC
 
       name = options[:name] || "#{referencing_attribute}_fk".to_sym
 
-      sql = "ALTER TABLE #{referencing_table} ADD CONSTRAINT #{name} FOREIGN KEY (#{referencing_attribute}) REFERENCES #{referenced_table} (#{referenced_attribute})"
-      sql << " ON DELETE #{referential_action(options[:on_delete])}" if options[:on_delete]
-      sql << " ON UPDATE #{referential_action(options[:on_update])}" if options[:on_update]
-
-      add_index(referencing_table, referencing_attribute) if options[:index] == true
+      sql = "ALTER TABLE #{referencing_table}".tap do |sql|
+        sql << " ADD CONSTRAINT #{name}"
+        sql << " FOREIGN KEY (#{referencing_attribute})"
+        sql << " REFERENCES #{referenced_table} (#{referenced_attribute})"
+        sql << " ON DELETE #{referential_action(options[:on_delete] || :restrict)}"
+        sql << " ON UPDATE #{referential_action(options[:on_update] || :restrict)}"
+      end
 
       execute(sql)
+
+      # A foreign key constraint doesn't have an implicit index.
+      add_index(referencing_table, referencing_attribute) if options[:add_index] == true
     end
 
     alias_method :add_foreign_key, :add_foreign_key_constraint
