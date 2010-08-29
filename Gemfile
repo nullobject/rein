@@ -1,6 +1,6 @@
 source :rubygems
 
-gem 'activerecord', '~> 3.0.0.rc'
+gem 'activerecord'
 
 group :development do
   gem 'bundler', '~> 1.0.0'

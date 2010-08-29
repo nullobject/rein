@@ -13,6 +13,10 @@ require 'rein/constraint/inclusion'
 require 'rein/constraint/numericality'
 
 module ActiveRecord::ConnectionAdapters
+  class MysqlAdapter < AbstractAdapter
+    include RC::ForeignKey
+  end
+
   class PostgreSQLAdapter < AbstractAdapter
     include RC::ForeignKey
     include RC::Inclusion
