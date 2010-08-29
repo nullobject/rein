@@ -82,5 +82,6 @@ And here we have a table of books:
 
 ## Credits
 
-* [Marcus Crafter](http://github.com/crafterm) for persevering when I recommended [foreigner](http://github.com/matthuhiggins/foreigner).
-* [Xavier Shay](http://github.com/xaviershay) for reminding me that that [your database is your friend](http://www.dbisyourfriend.com/).
+* [Marcus Crafter](http://github.com/crafterm)
+* [Tim Lucas](http://github.com/toolmantim)
+* [Xavier Shay](http://github.com/xaviershay)
