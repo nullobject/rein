@@ -15,6 +15,8 @@ module RC
       execute(sql)
     end
 
+    alias_method :add_foreign_key, :add_foreign_key_constraint
+
   private
     def referential_action(action)
       case action.to_sym
