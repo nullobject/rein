@@ -13,8 +13,13 @@ describe RC::Inclusion, "#add_inclusion_constraint" do
     stub(adapter).execute
   end
 
-  context "with a given array of values" do
-    before { adapter.add_inclusion_constraint(:books, :state, :in => [:on_shelf, :on_loan]) }
-    it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_state CHECK (state IN ('on_shelf', 'on_loan'))") }
+  context "given an array of string values" do
+    before { adapter.add_inclusion_constraint(:books, :state, :in => %w(available on_loan)) }
+    it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_state CHECK (state IN ('available', 'on_loan'))") }
+  end
+
+  context "given an array of numeric values" do
+    before { adapter.add_inclusion_constraint(:books, :state, :in => [1, 2, 3]) }
+    it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_state CHECK (state IN (1, 2, 3))") }
   end
 end
