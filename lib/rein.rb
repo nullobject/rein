@@ -9,15 +9,18 @@ require 'active_record'
 require 'active_support/core_ext/hash'
 
 require 'rein/constraint/foreign_key'
+require 'rein/constraint/primary_key'
 require 'rein/constraint/inclusion'
 require 'rein/constraint/numericality'
 
 module ActiveRecord::ConnectionAdapters
   class MysqlAdapter < AbstractAdapter
+    include RC::PrimaryKey
     include RC::ForeignKey
   end
 
   class PostgreSQLAdapter < AbstractAdapter
+    include RC::PrimaryKey
     include RC::ForeignKey
     include RC::Inclusion
     include RC::Numericality
