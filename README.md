@@ -1,6 +1,6 @@
 # Rein
 
-Database constraints made easy for ActiveRecord. Rein currently supports PostgreSQL and MySQL (foreign keys only).
+Database constraints made easy for ActiveRecord. Rein currently supports PostgreSQL and MySQL (foreign keys only) for both Rails 2 & 3.
 
 
 ## Introduction
