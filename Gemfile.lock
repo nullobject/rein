@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rein (0.5.2)
+    rein (0.6.0)
       activerecord
 
 GEM
