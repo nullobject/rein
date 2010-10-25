@@ -9,6 +9,7 @@ require 'active_record'
 require 'active_support/core_ext/hash'
 
 require 'rein/constraint/foreign_key'
+require 'rein/constraint/mysql_remove_foreign_key'
 require 'rein/constraint/primary_key'
 require 'rein/constraint/inclusion'
 require 'rein/constraint/numericality'
@@ -18,12 +19,14 @@ module ActiveRecord::ConnectionAdapters
   class MysqlAdapter < AbstractAdapter
     include RC::PrimaryKey
     include RC::ForeignKey
+    include RC::MysqlRemoveForeignKey
     include Rein::View
   end
 
   class Mysql2Adapter < AbstractAdapter
     include RC::PrimaryKey
     include RC::ForeignKey
+    include RC::MysqlRemoveForeignKey
     include Rein::View
   end
 
