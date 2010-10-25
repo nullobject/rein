@@ -21,6 +21,12 @@ module ActiveRecord::ConnectionAdapters
     include Rein::View
   end
 
+  class Mysql2Adapter < AbstractAdapter
+    include RC::PrimaryKey
+    include RC::ForeignKey
+    include Rein::View
+  end
+
   class PostgreSQLAdapter < AbstractAdapter
     include RC::PrimaryKey
     include RC::ForeignKey
