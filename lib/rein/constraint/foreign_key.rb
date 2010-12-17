@@ -27,7 +27,7 @@ module RC
 
       name = options[:name] || "#{referencing_attribute}_fk".to_sym
 
-      if self.class.is_a?(ActiveRecord::ConnectionAdapters::MysqlAdapter)
+      if is_a_mysql_adapter?
         execute "ALTER TABLE #{referencing_table} DROP FOREIGN KEY #{name}"
       else
         execute "ALTER TABLE #{referencing_table} DROP CONSTRAINT #{name}"
@@ -52,6 +52,10 @@ module RC
       else
         raise "Unknown referential action '#{action}'"
       end
+    end
+
+    def is_a_mysql_adapter?
+      self.class.to_s =~ /Mysql.?Adapter/
     end
   end
 end
