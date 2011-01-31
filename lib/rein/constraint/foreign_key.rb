@@ -55,7 +55,7 @@ module RC
     end
 
     def is_a_mysql_adapter?
-      self.class.to_s =~ /Mysql.?Adapter/
+      self.class.to_s =~ /Mysql[2]?Adapter/
     end
   end
 end
