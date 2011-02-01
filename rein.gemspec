@@ -21,11 +21,10 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'activerecord'
 
-  s.add_development_dependency 'bundler', '~> 1.0.0'
   s.add_development_dependency 'hirb',    '~> 0.3.2'
   s.add_development_dependency 'rake',    '~> 0.8.7'
-  s.add_development_dependency 'rcov',    '~> 0.9.8'
-  s.add_development_dependency 'rspec',   '~> 2.0.0'
+  s.add_development_dependency 'rcov',    '~> 0.9.9'
+  s.add_development_dependency 'rspec',   '~> 2.4.0'
   s.add_development_dependency 'rr',      '~> 1.0.0'
   s.add_development_dependency 'wirble',  '~> 0.1.3'
 end
