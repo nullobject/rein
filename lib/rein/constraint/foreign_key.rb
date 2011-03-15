@@ -1,10 +1,10 @@
 module RC
   module ForeignKey
     def add_foreign_key_constraint(referencing_table, referenced_table, options = {})
-      referencing_attribute = options[:referencing] || "#{referenced_table.to_s.singularize}_id".to_sym
-      referenced_attribute  = "id".to_sym
+      referencing_attribute = (options[:referencing] || "#{referenced_table.to_s.singularize}_id").to_sym
+      referenced_attribute  = (options[:referenced] || "id").to_sym
 
-      name = options[:name] || "#{referencing_attribute}_fk".to_sym
+      name = (options[:name] || "#{referencing_attribute}_fk").to_sym
 
       sql = "ALTER TABLE #{referencing_table}".tap do |sql|
         sql << " ADD CONSTRAINT #{name}"
