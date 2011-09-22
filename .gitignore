@@ -2,3 +2,4 @@
 *.gem
 coverage
 coverage.data
+.rvmrc
