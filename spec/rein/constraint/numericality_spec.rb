@@ -28,6 +28,11 @@ describe RC::Numericality, "#add_numericality_constraint" do
     it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_published_month CHECK (published_month = 3)") }
   end
 
+  context "not_equal_to" do
+    before { adapter.add_numericality_constraint(:books, :published_month, :not_equal_to => 0) }
+    it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_published_month CHECK (published_month != 0)") }
+  end
+
   context "less_than" do
     before { adapter.add_numericality_constraint(:books, :published_month, :less_than => 4) }
     it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_published_month CHECK (published_month < 4)") }
