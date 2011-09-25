@@ -9,9 +9,7 @@ describe RC::PrimaryKey, "#add_primary_key" do
 
   subject { adapter }
 
-  before do
-    stub(adapter).execute
-  end
+  before { stub(adapter).execute }
 
   context "with no options" do
     before { adapter.add_primary_key(:books) }

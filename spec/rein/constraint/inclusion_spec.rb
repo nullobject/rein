@@ -9,9 +9,7 @@ describe RC::Inclusion, "#add_inclusion_constraint" do
 
   subject { adapter }
 
-  before do
-    stub(adapter).execute
-  end
+  before { stub(adapter).execute }
 
   context "given an array of string values" do
     before { adapter.add_inclusion_constraint(:books, :state, :in => %w(available on_loan)) }

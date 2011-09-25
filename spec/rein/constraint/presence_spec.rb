@@ -9,9 +9,7 @@ describe RC::Presence, "#add_presence_constraint" do
 
   subject { adapter }
 
-  before do
-    stub(adapter).execute
-  end
+  before { stub(adapter).execute }
 
   context "given a table and attribute" do
     before { adapter.add_presence_constraint(:books, :state) }

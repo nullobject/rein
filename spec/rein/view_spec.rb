@@ -9,9 +9,7 @@ describe Rein::View do
 
   subject { adapter }
 
-  before do
-    stub(adapter).execute
-  end
+  before { stub(adapter).execute }
 
   describe "#create_view" do
     before { adapter.create_view(:foo, "SELECT * FROM bar") }

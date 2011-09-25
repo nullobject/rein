@@ -9,9 +9,7 @@ describe RC::Numericality, "#add_numericality_constraint" do
 
   subject { adapter }
 
-  before do
-    stub(adapter).execute
-  end
+  before { stub(adapter).execute }
 
   context "greater_than" do
     before { adapter.add_numericality_constraint(:books, :published_month, :greater_than => 1) }

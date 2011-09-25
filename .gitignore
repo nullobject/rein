@@ -1,5 +1,4 @@
-.bundle
 *.gem
+.bundle
 coverage
-coverage.data
 .rvmrc
