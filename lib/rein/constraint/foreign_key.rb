@@ -23,7 +23,6 @@ module RC
 
     def remove_foreign_key_constraint(referencing_table, referenced_table, options = {})
       referencing_attribute = options[:referencing] || "#{referenced_table.to_s.singularize}_id".to_sym
-      referenced_attribute  = "id".to_sym
 
       name = options[:name] || "#{referencing_attribute}_fk".to_sym
 
