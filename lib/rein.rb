@@ -7,6 +7,7 @@ RC = Rein::Constraint
 
 require "active_record"
 require "active_support/core_ext/hash"
+require "active_support/inflector"
 
 require "rein/constraint/primary_key"
 require "rein/constraint/foreign_key"
