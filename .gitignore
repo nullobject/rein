@@ -1,4 +1,4 @@
 *.gem
 .bundle
 coverage
-.rvmrc
+Gemfile.lock
