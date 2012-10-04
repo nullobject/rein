@@ -10,8 +10,8 @@ module RC
         sql << " ADD CONSTRAINT #{name}"
         sql << " FOREIGN KEY (#{referencing_attribute})"
         sql << " REFERENCES #{referenced_table} (#{referenced_attribute})"
-        sql << " ON DELETE #{referential_action(options[:on_delete] || :restrict)}"
-        sql << " ON UPDATE #{referential_action(options[:on_update] || :restrict)}"
+        sql << " ON DELETE #{referential_action(options[:on_delete])}" if options[:on_delete].present?
+        sql << " ON UPDATE #{referential_action(options[:on_update])}" if options[:on_update].present?
       end
 
       execute(sql)
