@@ -50,9 +50,14 @@ describe RC::ForeignKey do
       it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON UPDATE CASCADE") }
     end
 
-    context "with a given on delete and update referential action" do
+    context "with a 'cascade' on delete and update referential action" do
       before { adapter.add_foreign_key_constraint(:books, :people, :on_delete => :cascade, :on_update => :cascade) }
       it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE CASCADE ON UPDATE CASCADE") }
+    end
+
+    context "with a 'no action' on delete and update referential action" do
+      before { adapter.add_foreign_key_constraint(:books, :people, :on_delete => :no_action, :on_update => :no_action) }
+      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE NO ACTION ON UPDATE NO ACTION") }
     end
 
     describe "with a given add_index option" do

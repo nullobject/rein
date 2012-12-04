@@ -40,6 +40,8 @@ module RC
   private
     def referential_action(action)
       case action.to_sym
+      when :no_action
+        "NO ACTION"
       when :cascade
         "CASCADE"
       when :restrict
