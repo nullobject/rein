@@ -80,8 +80,9 @@ And here we have a table of books:
     add_inclusion_constraint :books, :state, :in => %w(available on_loan)
 
 
-## Credits
+## Contributors
 
 * [Marcus Crafter](http://github.com/crafterm)
 * [Tim Lucas](http://github.com/toolmantim)
 * [Xavier Shay](http://github.com/xaviershay)
+* [Tom Meier](http://github.com/tommeier)
