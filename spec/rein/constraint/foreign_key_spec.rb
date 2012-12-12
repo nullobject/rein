@@ -17,22 +17,22 @@ describe RC::ForeignKey do
 
     context "with no options" do
       before { adapter.add_foreign_key_constraint(:books, :people) }
-      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT person_id_fk FOREIGN KEY (person_id) REFERENCES people (id)") }
+      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (id)") }
     end
 
     context "with a given referencing attribute" do
       before { adapter.add_foreign_key_constraint(:books, :people, :referencing => :author_id) }
-      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT author_id_fk FOREIGN KEY (author_id) REFERENCES people (id)") }
+      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_author_id_fk FOREIGN KEY (author_id) REFERENCES people (id)") }
     end
 
     context "with a given referenced attribute" do
       before { adapter.add_foreign_key_constraint(:books, :people, :referenced => :person_id) }
-      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT person_id_fk FOREIGN KEY (person_id) REFERENCES people (person_id)") }
+      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (person_id)") }
     end
 
     context "with a given referencing attribute and referenced attribute" do
       before { adapter.add_foreign_key_constraint(:books, :people, :referencing => :author_id, :referenced => :person_id) }
-      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT author_id_fk FOREIGN KEY (author_id) REFERENCES people (person_id)") }
+      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_author_id_fk FOREIGN KEY (author_id) REFERENCES people (person_id)") }
     end
 
     context "with a given name" do
@@ -42,22 +42,22 @@ describe RC::ForeignKey do
 
     context "with a given on delete referential action" do
       before { adapter.add_foreign_key_constraint(:books, :people, :on_delete => :cascade) }
-      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE CASCADE") }
+      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE CASCADE") }
     end
 
     context "with a given on update referential action" do
       before { adapter.add_foreign_key_constraint(:books, :people, :on_update => :cascade) }
-      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON UPDATE CASCADE") }
+      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON UPDATE CASCADE") }
     end
 
     context "with a 'cascade' on delete and update referential action" do
       before { adapter.add_foreign_key_constraint(:books, :people, :on_delete => :cascade, :on_update => :cascade) }
-      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE CASCADE ON UPDATE CASCADE") }
+      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE CASCADE ON UPDATE CASCADE") }
     end
 
     context "with a 'no action' on delete and update referential action" do
       before { adapter.add_foreign_key_constraint(:books, :people, :on_delete => :no_action, :on_update => :no_action) }
-      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE NO ACTION ON UPDATE NO ACTION") }
+      it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE NO ACTION ON UPDATE NO ACTION") }
     end
 
     describe "with a given add_index option" do
@@ -81,12 +81,12 @@ describe RC::ForeignKey do
 
     context "with no options" do
       before { adapter.remove_foreign_key_constraint(:books, :people) }
-      it { should have_received.execute("ALTER TABLE books DROP CONSTRAINT person_id_fk") }
+      it { should have_received.execute("ALTER TABLE books DROP CONSTRAINT books_person_id_fk") }
     end
 
     context "with a given referencing attribute" do
       before { adapter.remove_foreign_key_constraint(:books, :people, :referencing => :author_id) }
-      it { should have_received.execute("ALTER TABLE books DROP CONSTRAINT author_id_fk") }
+      it { should have_received.execute("ALTER TABLE books DROP CONSTRAINT books_author_id_fk") }
     end
 
     context "with a given name" do

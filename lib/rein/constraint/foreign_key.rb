@@ -4,7 +4,7 @@ module RC
       referencing_attribute = (options[:referencing] || "#{referenced_table.to_s.singularize}_id").to_sym
       referenced_attribute  = (options[:referenced] || "id").to_sym
 
-      name = (options[:name] || "#{referencing_attribute}_fk").to_sym
+      name = options[:name] || default_constraint_name(referencing_table, referencing_attribute)
 
       sql = "ALTER TABLE #{referencing_table}".tap do |sql|
         sql << " ADD CONSTRAINT #{name}"
@@ -24,7 +24,7 @@ module RC
     def remove_foreign_key_constraint(referencing_table, referenced_table, options = {})
       referencing_attribute = options[:referencing] || "#{referenced_table.to_s.singularize}_id".to_sym
 
-      name = options[:name] || "#{referencing_attribute}_fk".to_sym
+      name = options[:name] || default_constraint_name(referencing_table, referencing_attribute)
 
       if is_a_mysql_adapter?
         execute "ALTER TABLE #{referencing_table} DROP FOREIGN KEY #{name}"
@@ -57,6 +57,10 @@ module RC
 
     def is_a_mysql_adapter?
       self.class.to_s =~ /Mysql[2]?Adapter/
+    end
+
+    def default_constraint_name(referencing_table, referencing_attribute)
+      "#{referencing_table}_#{referencing_attribute}_fk".to_sym
     end
   end
 end
