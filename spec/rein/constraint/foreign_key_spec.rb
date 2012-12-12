@@ -81,12 +81,12 @@ describe RC::ForeignKey do
 
     context "with no options" do
       before { adapter.remove_foreign_key_constraint(:books, :people) }
-      it { should have_received.execute("ALTER TABLE books DROP CONSTRAINT person_id_fk") }
+      it { should have_received.execute("ALTER TABLE books DROP CONSTRAINT books_person_id_fk") }
     end
 
     context "with a given referencing attribute" do
       before { adapter.remove_foreign_key_constraint(:books, :people, :referencing => :author_id) }
-      it { should have_received.execute("ALTER TABLE books DROP CONSTRAINT author_id_fk") }
+      it { should have_received.execute("ALTER TABLE books DROP CONSTRAINT books_author_id_fk") }
     end
 
     context "with a given name" do
