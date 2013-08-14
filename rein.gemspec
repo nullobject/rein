@@ -24,5 +24,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rr"
   s.add_development_dependency "simplecov"
 
-  s.add_runtime_dependency "activerecord"
+  s.add_runtime_dependency "activerecord", '>= 3.1.0'
 end
