@@ -8,6 +8,7 @@ RC = Rein::Constraint
 require "active_record"
 require "active_support/core_ext/hash"
 require "active_support/inflector"
+require 'active_record/connection_adapters/abstract_mysql_adapter'
 
 require "rein/constraint/primary_key"
 require "rein/constraint/foreign_key"
@@ -23,7 +24,7 @@ module ActiveRecord::ConnectionAdapters
     include Rein::View
   end
 
-  class Mysql2Adapter < AbstractAdapter
+  class Mysql2Adapter < AbstractMysqlAdapter
     include RC::PrimaryKey
     include RC::ForeignKey
     include Rein::View
