@@ -9,10 +9,10 @@ describe RC::Presence, "#add_presence_constraint" do
 
   subject { adapter }
 
-  before { stub(adapter).execute }
+  before { adapter.stub(:execute) }
 
   context "given a table and attribute" do
     before { adapter.add_presence_constraint(:books, :state) }
-    it { should have_received.execute("ALTER TABLE books ADD CONSTRAINT books_state CHECK (state !~ '^\s*$')") }
+    it { should have_received(:execute).with("ALTER TABLE books ADD CONSTRAINT books_state CHECK (state !~ '^\s*$')") }
   end
 end
