@@ -15,4 +15,9 @@ describe RC::PrimaryKey, "#add_primary_key" do
     before { adapter.add_primary_key(:books) }
     it { should have_received(:execute).with("ALTER TABLE books ADD PRIMARY KEY (id)") }
   end
+
+  context "with 'column' option" do
+    before { adapter.add_primary_key(:books, column: :code) }
+    it { should have_received(:execute).with("ALTER TABLE books ADD PRIMARY KEY (code)") }
+  end
 end
