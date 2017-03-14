@@ -1,0 +1,35 @@
+AllCops:
+  Exclude:
+    - "bin/**/*"
+    - "mache.gemspec"
+
+Metrics/AbcSize:
+  Max: 27
+
+Metrics/BlockLength:
+  ExcludedMethods: describe
+
+Metrics/CyclomaticComplexity:
+  Max: 7
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 11
+
+Style/BlockDelimiters:
+  Enabled: false
+
+Style/Documentation:
+  Exclude:
+    - "spec/**/*"
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
