@@ -45,8 +45,8 @@ module Rein
         when :no_action then "NO ACTION"
         when :cascade then "CASCADE"
         when :restrict then "RESTRICT"
-        when :nullify then "SET NULL"
-        when :default then "SET DEFAULT"
+        when :set_null, :nullify then "SET NULL"
+        when :set_default, :default then "SET DEFAULT"
         else
           raise "Unknown referential action '#{action}'"
         end
