@@ -1,7 +1,7 @@
 AllCops:
   Exclude:
     - "bin/**/*"
-    - "mache.gemspec"
+    - "rein.gemspec"
 
 Metrics/AbcSize:
   Max: 27
