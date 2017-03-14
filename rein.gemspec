@@ -1,25 +1,26 @@
-$:.push File.expand_path("../lib", __FILE__)
+lib = File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require "rein/version"
 
-Gem::Specification.new do |s|
-  s.name        = "rein"
-  s.version     = Rein::VERSION
-  s.author      = "Josh Bassett"
-  s.email       = "josh.bassett@gmail.com"
-  s.homepage    = "http://github.com/nullobject/rein"
-  s.summary     = "Database constraints made easy for ActiveRecord."
-  s.description = "Rein adds bunch of methods to your ActiveRecord migrations so you can easily tame your database."
+Gem::Specification.new do |spec|
+  spec.name        = "rein"
+  spec.version     = Rein::VERSION
+  spec.author      = "Joshua Bassett"
+  spec.email       = "josh.bassett@gmail.com"
+  spec.summary     = "Database constraints made easy for ActiveRecord."
+  spec.description = "Rein adds bunch of methods to your ActiveRecord migrations so you can easily tame your database."
+  spec.homepage    = "http://github.com/nullobject/rein"
+  spec.license     = "MIT"
+  spec.files = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(test|spec|features)/})
+  end
+  spec.require_paths = ["lib"]
 
-  s.rubyforge_project = "rein"
+  spec.add_runtime_dependency "activerecord", ">= 3.2.0"
 
-  s.files       = `git ls-files`.split("\n")
-  s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables = `git ls-files -- bin/*`.split("\n").map {|f| File.basename(f) }
-
-  s.add_development_dependency "rake"
-  s.add_development_dependency "rspec"
-  s.add_development_dependency "simplecov"
-
-  s.add_runtime_dependency "activerecord", '>= 3.2.0'
+  spec.add_development_dependency "bundler", "~> 1.14"
+  spec.add_development_dependency "rake", "~> 12.0"
+  spec.add_development_dependency "rspec", "~> 3.5"
+  spec.add_development_dependency "rubocop", "~> 0.47"
 end

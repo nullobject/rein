@@ -1,27 +1,19 @@
 # Rein
 
-Database constraints made easy for ActiveRecord. Rein currently supports PostgreSQL and MySQL (foreign keys only) for both Rails 2 & 3.
-
+Database constraints made easy for ActiveRecord. Rein currently supports
+PostgreSQL and MySQL (foreign keys only).
 
 ## Introduction
 
-[Database integrity](http://en.wikipedia.org/wiki/Database_integrity) is a "good thing". Constraining the allowed values in your database at the database-level (rather than solely at the application-level) is a much more robust way of ensuring your data stays sane.
+[Database integrity](http://en.wikipedia.org/wiki/Database_integrity) is a
+"good thing". Constraining the allowed values in your database at the
+database-level (rather than solely at the application-level) is a much more
+robust way of ensuring your data stays sane.
 
-Unfortunately, ActiveRecord doesn't encourage (or even allow) you to use database integrity without resorting to hand-crafted SQL. Rein adds a handful of methods to your ActiveRecord migrations so that you can easily tame your database.
-
-
-## FAQ
-
-### How is Rein different to other gems like [foreigner](http://github.com/matthuhiggins/foreigner) or [redhillonrails](http://github.com/mlomnicki/redhillonrails_core), which do the same thing?
-
-If you're using MySQL then there is no difference, Rein should work as a drop-in replacement. If you're using PostgreSQL however, then Rein provides you with extra methods for placing check constraints on your data.
-
-### If [DHH](http://en.wikipedia.org/wiki/David_Heinemeier_Hansson) wanted my app to have database constraints then Rails would have been born with them?
-
-Rails is an opinionated piece of software. One opinion is that your database should simply function as a "dumb" container which your application controls. This is the opinion of Rails.
-
-Another opinion is that your database is actually a powerful [DBMS](http://en.wikipedia.org/wiki/Database_management_system) which has already solved problems like data integrity, and your application should wield this power.
-
+Unfortunately, ActiveRecord doesn't encourage (or even allow) you to use
+database integrity without resorting to hand-crafted SQL. Rein adds a handful
+of methods to your ActiveRecord migrations so that you can easily tame your
+database.
 
 ## Quick Start
 
@@ -40,7 +32,6 @@ Add a numericality constraint (PostgreSQL only):
 Add an inclusion constraint (PostgreSQL only):
 
     add_inclusion_constraint :books, :state, :in => %w(available on_loan)
-
 
 ## Example
 
@@ -79,10 +70,6 @@ And here we have a table of books:
     # State is always either "available" or "on_loan".
     add_inclusion_constraint :books, :state, :in => %w(available on_loan)
 
+## License
 
-## Contributors
-
-* [Marcus Crafter](http://github.com/crafterm)
-* [Tim Lucas](http://github.com/toolmantim)
-* [Xavier Shay](http://github.com/xaviershay)
-* [Tom Meier](http://github.com/tommeier)
+This project is licensed under the [MIT License](/LICENSE).
