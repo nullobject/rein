@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Rein::Constraint::ForeignKey do
+RSpec.describe Rein::Constraint::ForeignKey do
   let(:adapter) do
     Class.new do
       include Rein::Constraint::ForeignKey

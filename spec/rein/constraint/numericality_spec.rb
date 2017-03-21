@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Rein::Constraint::Numericality, "#add_numericality_constraint" do
+RSpec.describe Rein::Constraint::Numericality, "#add_numericality_constraint" do
   let(:adapter) do
     Class.new do
       include Rein::Constraint::Numericality

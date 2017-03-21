@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Rein::Constraint::Inclusion, "#add_inclusion_constraint" do
+RSpec.describe Rein::Constraint::Inclusion, "#add_inclusion_constraint" do
   let(:adapter) do
     Class.new do
       include Rein::Constraint::Inclusion

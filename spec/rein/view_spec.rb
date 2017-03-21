@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Rein::View do
+RSpec.describe Rein::View do
   let(:adapter) do
     Class.new do
       include Rein::View

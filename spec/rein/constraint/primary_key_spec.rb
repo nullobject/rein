@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Rein::Constraint::PrimaryKey, "#add_primary_key" do
+RSpec.describe Rein::Constraint::PrimaryKey, "#add_primary_key" do
   let(:adapter) do
     Class.new do
       include Rein::Constraint::PrimaryKey

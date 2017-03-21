@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Rein::Constraint::Presence, "#add_presence_constraint" do
+RSpec.describe Rein::Constraint::Presence, "#add_presence_constraint" do
   let(:adapter) do
     Class.new do
       include Rein::Constraint::Presence
