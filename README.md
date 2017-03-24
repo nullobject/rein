@@ -20,6 +20,8 @@ can easily tame the data in your database.
     * [Inclusion constraints](#inclusion-constraints)
     * [Numericality constraints](#numericality-constraints)
     * [Presence constraints](#presence-constraints)
+  * [Data types](#data-types)
+    * [ENUM](#enum)
   * [Example](#example)
   * [License](#license)
 
@@ -120,6 +122,18 @@ you want to ensure that there is an actual value for a string:
 
 ```ruby
 add_presence_constraint :books, :title
+```
+
+## Data types
+
+## ENUM
+
+*(PostgreSQL only)*
+
+An enum is a data type that has a static and ordered set of values.
+
+```ruby
+add_enum_type :book_type, ['paperback', 'hardcover']
 ```
 
 ## Example
