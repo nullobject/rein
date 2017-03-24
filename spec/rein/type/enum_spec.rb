@@ -41,7 +41,7 @@ RSpec.describe Rein::Type::Enum do
     end
 
     context "add a value to an enum" do
-      before { adapter.add_enum_value(:book_type, 'ebook') }
+      before { adapter.add_enum_value(:book_type, "ebook") }
       it { is_expected.to have_received(:execute).with("ALTER TYPE book_type ADD VALUE 'ebook'") }
     end
   end
