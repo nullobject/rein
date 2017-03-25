@@ -73,6 +73,12 @@ Here's all the options for specifying the delete/update behaviour:
   referenced row is deleted.
 - `restrict`: prevents deletion of a referenced row.
 
+To remove a foreign key constraint:
+
+```ruby
+remove_foreign_key_constraint :books, :authors
+```
+
 ### Inclusion constraints
 
 *(PostgreSQL only)*
