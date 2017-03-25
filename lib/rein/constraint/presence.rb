@@ -12,6 +12,11 @@ module Rein
         end
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end
+
+      def remove_presence_constraint(table, attribute)
+        name = "#{table}_#{attribute}"
+        execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
+      end
     end
   end
 end

@@ -73,6 +73,12 @@ Here's all the options for specifying the delete/update behaviour:
   referenced row is deleted.
 - `restrict`: prevents deletion of a referenced row.
 
+To remove a foreign key constraint:
+
+```ruby
+remove_foreign_key_constraint :books, :authors
+```
+
 ### Inclusion constraints
 
 *(PostgreSQL only)*
@@ -85,6 +91,12 @@ For example, we can ensure that `state` column values can only ever be
 
 ```ruby
 add_inclusion_constraint :books, :state, in: %w(available on_loan)
+```
+
+To remove an inclusion constraint:
+
+```ruby
+remove_inclusion_constraint :books, :state
 ```
 
 ### Numericality constraints
@@ -122,6 +134,12 @@ add_numericality_constraint :books, :publication_month,
   if: "status = 'published'"
 ```
 
+To remove a numericality constraint:
+
+```ruby
+remove_numericality_constraint :books, :publication_month
+```
+
 ### Presence constraints
 
 *(PostgreSQL only)*
@@ -140,6 +158,12 @@ you can pass an optional `if` option:
 
 ```ruby
 add_presence_constraint :books, :isbn, if: "status = 'published'"
+```
+
+To remove a presence constraint:
+
+```ruby
+remove_presence_constraint :books, :title
 ```
 
 ## Data types

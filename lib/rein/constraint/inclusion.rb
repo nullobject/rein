@@ -7,10 +7,15 @@ module Rein
       include ActiveRecord::ConnectionAdapters::Quoting
 
       def add_inclusion_constraint(table, attribute, options = {})
-        name       = "#{table}_#{attribute}"
-        values     = options[:in].map { |value| quote(value) }.join(", ")
+        name = "#{table}_#{attribute}"
+        values = options[:in].map { |value| quote(value) }.join(", ")
         conditions = "#{attribute} IN (#{values})"
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
+      end
+
+      def remove_inclusion_constraint(table, attribute)
+        name = "#{table}_#{attribute}"
+        execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
       end
     end
   end
