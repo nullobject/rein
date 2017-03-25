@@ -128,6 +128,12 @@ add_numericality_constraint :books, :publication_month,
   if: "status = 'published'"
 ```
 
+To remove a numericality constraint:
+
+```ruby
+remove_numericality_constraint :books, :publication_month
+```
+
 ### Presence constraints
 
 *(PostgreSQL only)*
