@@ -5,7 +5,7 @@ module Rein
       include ActiveRecord::ConnectionAdapters::Quoting
 
       def add_presence_constraint(table, attribute, options = {})
-        name       = "#{table}_#{attribute}"
+        name = "#{table}_#{attribute}"
         conditions = "#{attribute} !~ '^\\s*$'"
         if options[:if].present?
           conditions = "NOT (#{options[:if]}) OR (#{conditions})"

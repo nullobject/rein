@@ -1,23 +1,25 @@
 require "spec_helper"
 
 RSpec.describe Rein::Constraint::PrimaryKey, "#add_primary_key" do
-  let(:adapter) do
+  subject(:adapter) do
     Class.new do
       include Rein::Constraint::PrimaryKey
     end.new
   end
 
-  subject { adapter }
-
   before { allow(adapter).to receive(:execute) }
 
   context "with no options" do
-    before { adapter.add_primary_key(:books) }
-    it { is_expected.to have_received(:execute).with("ALTER TABLE books ADD PRIMARY KEY (id)") }
+    it "adds a primary key" do
+      expect(adapter).to receive(:execute).with("ALTER TABLE books ADD PRIMARY KEY (id)")
+      adapter.add_primary_key(:books)
+    end
   end
 
   context "with 'column' option" do
-    before { adapter.add_primary_key(:books, column: :code) }
-    it { is_expected.to have_received(:execute).with("ALTER TABLE books ADD PRIMARY KEY (code)") }
+    it "adds a primary key" do
+      expect(adapter).to receive(:execute).with("ALTER TABLE books ADD PRIMARY KEY (code)")
+      adapter.add_primary_key(:books, column: :code)
+    end
   end
 end
