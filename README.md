@@ -22,6 +22,7 @@ can easily tame the data in your database.
     * [Presence constraints](#presence-constraints)
   * [Data types](#data-types)
     * [Enumerated types](#enumerated-types)
+  * [Views](#views)
   * [Example](#example)
   * [License](#license)
 
@@ -134,6 +135,24 @@ An enum is a data type that represents a static, ordered set of values.
 
 ```ruby
 add_enum_type :book_type, ['paperback', 'hardcover']
+```
+
+## Views
+
+A view is a named query that you can refer to just like an ordinary table. You
+can even create ActiveRecord models that are backed by views in your database.
+
+For example, we can define an `available_books` view that returns only the
+books which are currently available:
+
+```ruby
+create_view(:available_books, "SELECT * FROM books WHERE state = 'available'")
+```
+
+To drop a view from the database:
+
+```ruby
+drop_view(:available_books)
 ```
 
 ## Example
