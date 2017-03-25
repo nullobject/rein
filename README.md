@@ -21,7 +21,7 @@ can easily tame the data in your database.
     * [Numericality constraints](#numericality-constraints)
     * [Presence constraints](#presence-constraints)
   * [Data types](#data-types)
-    * [ENUM](#enum)
+    * [Enumerated types](#enumerated-types)
   * [Example](#example)
   * [License](#license)
 
@@ -126,11 +126,11 @@ add_presence_constraint :books, :title
 
 ## Data types
 
-## ENUM
+### Enumerated types
 
 *(PostgreSQL only)*
 
-An enum is a data type that has a static and ordered set of values.
+An enum is a data type that represents a static, ordered set of values.
 
 ```ruby
 add_enum_type :book_type, ['paperback', 'hardcover']
