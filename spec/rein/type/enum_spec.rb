@@ -11,9 +11,9 @@ RSpec.describe Rein::Type::Enum do
 
   before { allow(adapter).to receive(:execute) }
 
-  describe "#add_enum_type" do
+  describe "#create_enum_type" do
     context "with name and fields" do
-      before { adapter.add_enum_type(:book_type, %w(paperback hardcover)) }
+      before { adapter.create_enum_type(:book_type, %w(paperback hardcover)) }
       it { is_expected.to have_received(:execute).with("CREATE TYPE book_type AS ENUM ('paperback', 'hardcover')") }
     end
   end

@@ -6,7 +6,7 @@ module Rein
     module Enum
       include ActiveRecord::ConnectionAdapters::Quoting
 
-      def add_enum_type(enum_name, enum_values = [])
+      def create_enum_type(enum_name, enum_values = [])
         enum_values = enum_values.map { |value| quote(value) }.join(", ")
         execute("CREATE TYPE #{enum_name} AS ENUM (#{enum_values})")
       end

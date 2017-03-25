@@ -151,7 +151,7 @@ add_presence_constraint :books, :isbn, if: "status = 'published'"
 An enum is a data type that represents a static, ordered set of values.
 
 ```ruby
-add_enum_type :book_type, ['paperback', 'hardcover']
+create_enum_type :book_type, ['paperback', 'hardcover']
 ```
 
 To drop an enum type from the database:
