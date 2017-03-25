@@ -87,6 +87,12 @@ For example, we can ensure that `state` column values can only ever be
 add_inclusion_constraint :books, :state, in: %w(available on_loan)
 ```
 
+To remove an inclusion constraint:
+
+```ruby
+remove_inclusion_constraint :books, :state
+```
+
 ### Numericality constraints
 
 *(PostgreSQL only)*
