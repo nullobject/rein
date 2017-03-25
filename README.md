@@ -154,6 +154,12 @@ you can pass an optional `if` option:
 add_presence_constraint :books, :isbn, if: "status = 'published'"
 ```
 
+To remove a presence constraint:
+
+```ruby
+remove_presence_constraint :books, :title
+```
+
 ## Data types
 
 ### Enumerated types
