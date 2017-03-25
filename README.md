@@ -109,6 +109,16 @@ Here's all the options for constraining the values:
 - `greater_than`
 - `greater_than_or_equal_to`
 
+You may also include an `if` option to enforce the constraint only under certain conditions,
+like so:
+
+```ruby
+add_numericality_constraint :books, :publication_month,
+  greater_than_or_equal_to: 1,
+  less_than_or_equal_to: 12,
+  if: "status = 'published'"
+```
+
 ### Presence constraints
 
 *(PostgreSQL only)*

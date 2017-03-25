@@ -19,6 +19,10 @@ module Rein
           [attribute, operator, value].join(" ")
         end.join(" AND ")
 
+        if options[:if].present?
+          conditions = "NOT (#{options[:if]}) OR (#{conditions})"
+        end
+
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end
     end
