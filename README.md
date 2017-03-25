@@ -175,7 +175,13 @@ remove_presence_constraint :books, :title
 An enum is a data type that represents a static, ordered set of values.
 
 ```ruby
-add_enum_type :book_type, ['paperback', 'hardcover']
+create_enum_type :book_type, ['paperback', 'hardcover']
+```
+
+To drop an enum type from the database:
+
+```ruby
+drop_enum_type :book_type
 ```
 
 ## Views
