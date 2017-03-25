@@ -16,6 +16,11 @@ RSpec.describe Rein::Constraint::Numericality, "#add_numericality_constraint" do
     it { is_expected.to have_received(:execute).with("ALTER TABLE books ADD CONSTRAINT books_published_month CHECK (published_month > 1)") }
   end
 
+  context "greater_than if" do
+    before { adapter.add_numericality_constraint(:books, :published_month, greater_than: 1, if: "status = 'published'") }
+    it { is_expected.to have_received(:execute).with("ALTER TABLE books ADD CONSTRAINT books_published_month CHECK (NOT (status = 'published') OR (published_month > 1))") }
+  end
+
   context "greater_than_or_equal_to" do
     before { adapter.add_numericality_constraint(:books, :published_month, greater_than_or_equal_to: 2) }
     it { is_expected.to have_received(:execute).with("ALTER TABLE books ADD CONSTRAINT books_published_month CHECK (published_month >= 2)") }
