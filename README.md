@@ -154,6 +154,12 @@ An enum is a data type that represents a static, ordered set of values.
 add_enum_type :book_type, ['paperback', 'hardcover']
 ```
 
+To drop an enum type from the database:
+
+```ruby
+drop_enum_type :book_type
+```
+
 ## Views
 
 A view is a named query that you can refer to just like an ordinary table. You

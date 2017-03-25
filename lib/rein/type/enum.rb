@@ -11,7 +11,7 @@ module Rein
         execute("CREATE TYPE #{enum_name} AS ENUM (#{enum_values})")
       end
 
-      def remove_enum_type(enum_name)
+      def drop_enum_type(enum_name)
         execute("DROP TYPE #{enum_name}")
       end
 
