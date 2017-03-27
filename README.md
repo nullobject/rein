@@ -193,13 +193,13 @@ For example, we can define an `available_books` view that returns only the
 books which are currently available:
 
 ```ruby
-create_view(:available_books, "SELECT * FROM books WHERE state = 'available'")
+create_view :available_books, "SELECT * FROM books WHERE state = 'available'"
 ```
 
 To drop a view from the database:
 
 ```ruby
-drop_view(:available_books)
+drop_view :available_books
 ```
 
 ## Example
