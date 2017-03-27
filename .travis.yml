@@ -1,2 +1,6 @@
 language: ruby
 before_install: gem install bundler -v 1.14.5
+gemfile:
+  - gemfiles/activerecord_4.gemfile
+  - gemfiles/activerecord_5.gemfile
+script: "bundle exec rake test"

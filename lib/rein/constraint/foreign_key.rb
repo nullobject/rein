@@ -1,3 +1,5 @@
+require "active_support/inflector"
+
 module Rein
   module Constraint
     # This module contains methods for defining foreign key constraints.

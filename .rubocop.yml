@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
-    - "bin/**/*"
+    - "Appraisals"
+    - "gemfiles/**/*"
     - "rein.gemspec"
 
 Metrics/AbcSize:
