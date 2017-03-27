@@ -2,7 +2,7 @@ PATH
   remote: ..
   specs:
     rein (2.0.0)
-      activerecord (>= 3.2.0)
+      activerecord (>= 4.0.0, < 6)
 
 GEM
   remote: http://rubygems.org/
