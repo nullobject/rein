@@ -1,5 +1,7 @@
 # Rein
 
+[![Build Status](https://travis-ci.org/nullobject/rein.svg?branch=master)](https://travis-ci.org/nullobject/rein)
+
 [Data integrity](http://en.wikipedia.org/wiki/Data_integrity) is a good thing.
 Constraining the values allowed by your application at the database-level,
 rather than at the application-level, is a more robust way of ensuring your
