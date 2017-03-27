@@ -24,6 +24,7 @@ can easily tame the data in your database.
     * [Enumerated types](#enumerated-types)
   * [Views](#views)
   * [Example](#example)
+  * [Contributing](#contributing)
   * [License](#license)
 
 ## Getting started
@@ -249,6 +250,15 @@ add_numericality_constraint :books, :published_year,
 add_numericality_constraint :books, :published_month,
   greater_than_or_equal_to: 1,
   less_than_or_equal_to: 12
+```
+
+## Contributing
+
+Pull requests are welcome. Please ensure that you run the tests before
+submitting your PR:
+
+```
+> bundle exec rake
 ```
 
 ## License
