@@ -102,6 +102,14 @@ To remove an inclusion constraint:
 remove_inclusion_constraint :books, :state
 ```
 
+You may also include an `if` option to enforce the constraint only under certain conditions,
+like so:
+
+```ruby
+add_inclusion_constraint :books, :state, in: %w(available on_loan),
+                                         if: "deleted_at IS NULL"
+```
+
 ### Numericality constraints
 
 *(PostgreSQL only)*

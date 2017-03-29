@@ -1,6 +1,7 @@
 require "active_record"
 require "active_record/connection_adapters/abstract_mysql_adapter"
 
+require "rein/constraint/options"
 require "rein/constraint/primary_key"
 require "rein/constraint/foreign_key"
 require "rein/constraint/inclusion"

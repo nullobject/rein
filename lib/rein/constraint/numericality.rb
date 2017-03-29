@@ -2,6 +2,8 @@ module Rein
   module Constraint
     # This module contains methods for defining numericality constraints.
     module Numericality
+      include Rein::Constraint::Options
+
       OPERATORS = {
         greater_than: :>,
         greater_than_or_equal_to: :>=,
@@ -19,9 +21,7 @@ module Rein
           [attribute, operator, value].join(" ")
         end.join(" AND ")
 
-        if options[:if].present?
-          conditions = "NOT (#{options[:if]}) OR (#{conditions})"
-        end
+        conditions = conditions_with_if(conditions, options)
 
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end
