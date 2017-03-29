@@ -14,7 +14,7 @@ module Rein
       }.freeze
 
       def add_numericality_constraint(table, attribute, options = {})
-        name = "#{table}_#{attribute}"
+        name = constraint_name("#{table}_#{attribute}", options)
 
         conditions = OPERATORS.slice(*options.keys).map do |key, operator|
           value = options[key]

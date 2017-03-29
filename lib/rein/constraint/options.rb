@@ -9,6 +9,10 @@ module Rein
           conditions
         end
       end
+
+      def constraint_name(default_name, options = {})
+        options[:name].presence || default_name
+      end
     end
   end
 end

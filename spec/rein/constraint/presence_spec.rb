@@ -23,6 +23,13 @@ RSpec.describe Rein::Constraint::Presence do
         adapter.add_presence_constraint(:books, :isbn, if: "state = 'published'")
       end
     end
+
+    context "given a name option" do
+      it "adds a constraint with that name" do
+        expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_state_is_valid CHECK (state !~ '^\\s*$')")
+        adapter.add_presence_constraint(:books, :state, name: "books_state_is_valid")
+      end
+    end
   end
 
   describe "#remove_presence_constraint" do
