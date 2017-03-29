@@ -17,6 +17,13 @@ RSpec.describe Rein::Constraint::Inclusion do
       end
     end
 
+    context "given an array of string values and an if option" do
+      it "adds a constraint" do
+        expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_state CHECK (NOT (deleted_at IS NULL) OR (state IN ('available', 'on_loan')))")
+        adapter.add_inclusion_constraint(:books, :state, in: %w(available on_loan), if: "deleted_at IS NULL")
+      end
+    end
+
     context "given an array of numeric values" do
       it "adds a constraint" do
         expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_state CHECK (state IN (1, 2, 3))")
