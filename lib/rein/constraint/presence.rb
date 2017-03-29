@@ -6,7 +6,7 @@ module Rein
       include Rein::Constraint::Options
 
       def add_presence_constraint(table, attribute, options = {})
-        name = "#{table}_#{attribute}"
+        name = constraint_name("#{table}_#{attribute}", options)
         conditions = conditions_with_if("#{attribute} !~ '^\\s*$'", options)
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end

@@ -111,6 +111,14 @@ add_inclusion_constraint :books, :state,
   if: "deleted_at IS NULL"
 ```
 
+You may optionally provide a `name` option to customize the name:
+
+```ruby
+add_inclusion_constraint :books, :state,
+  in: %w(available on_loan),
+  name: "books_state_is_valid"
+```
+
 ### Numericality constraints
 
 *(PostgreSQL only)*
@@ -146,6 +154,15 @@ add_numericality_constraint :books, :publication_month,
   if: "status = 'published'"
 ```
 
+You may optionally provide a `name` option to customize the name:
+
+```ruby
+add_numericality_constraint :books, :publication_month,
+  greater_than_or_equal_to: 1,
+  less_than_or_equal_to: 12,
+  name: "books_publication_month_is_valid"
+```
+
 To remove a numericality constraint:
 
 ```ruby
@@ -170,6 +187,12 @@ you can pass an optional `if` option:
 
 ```ruby
 add_presence_constraint :books, :isbn, if: "status = 'published'"
+```
+
+You may optionally provide a `name` option to customize the name:
+
+```ruby
+add_presence_constraint :books, :isbn, name: "books_isbn_is_valid"
 ```
 
 To remove a presence constraint:

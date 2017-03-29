@@ -65,6 +65,13 @@ RSpec.describe Rein::Constraint::Numericality do
         adapter.add_numericality_constraint(:books, :published_month, greater_than_or_equal_to: 5, less_than_or_equal_to: 6)
       end
     end
+
+    context "given a name option" do
+      it "adds a constraint with that name" do
+        expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_published_month_is_valid CHECK (published_month > 1)")
+        adapter.add_numericality_constraint(:books, :published_month, greater_than: 1, name: "books_published_month_is_valid")
+      end
+    end
   end
 
   describe "#remove_numericality_constraint" do
