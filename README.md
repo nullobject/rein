@@ -102,12 +102,13 @@ To remove an inclusion constraint:
 remove_inclusion_constraint :books, :state
 ```
 
-You may also include an `if` option to enforce the constraint only under certain conditions,
-like so:
+You may also include an `if` option to enforce the constraint only under
+certain conditions, like so:
 
 ```ruby
-add_inclusion_constraint :books, :state, in: %w(available on_loan),
-                                         if: "deleted_at IS NULL"
+add_inclusion_constraint :books, :state,
+  in: %w(available on_loan),
+  if: "deleted_at IS NULL"
 ```
 
 ### Numericality constraints
@@ -135,8 +136,8 @@ Here's all the options for constraining the values:
 - `greater_than`
 - `greater_than_or_equal_to`
 
-You may also include an `if` option to enforce the constraint only under certain conditions,
-like so:
+You may also include an `if` option to enforce the constraint only under
+certain conditions, like so:
 
 ```ruby
 add_numericality_constraint :books, :publication_month,
