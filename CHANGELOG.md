@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0
+
+- Add `if` option to inclusion constraints.
+- Add `name` option to constraints.
+
 ## 2.0.0
 
 - Add support for enumerated types.
