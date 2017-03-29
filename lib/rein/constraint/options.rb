@@ -10,8 +10,8 @@ module Rein
         end
       end
 
-      def constraint_name(default_name, options = {})
-        options[:name].presence || default_name
+      def constraint_name(table, attribute, options = {})
+        options[:name].presence || "#{table}_#{attribute}"
       end
     end
   end

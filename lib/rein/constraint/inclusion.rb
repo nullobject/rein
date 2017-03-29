@@ -8,14 +8,14 @@ module Rein
       include Rein::Constraint::Options
 
       def add_inclusion_constraint(table, attribute, options = {})
-        name = constraint_name("#{table}_#{attribute}", options)
+        name = constraint_name(table, attribute, options)
         values = options[:in].map { |value| quote(value) }.join(", ")
         conditions = conditions_with_if("#{attribute} IN (#{values})", options)
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end
 
-      def remove_inclusion_constraint(table, attribute)
-        name = "#{table}_#{attribute}"
+      def remove_inclusion_constraint(table, attribute, options = {})
+        name = constraint_name(table, attribute, options)
         execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
       end
     end
