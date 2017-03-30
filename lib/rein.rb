@@ -9,6 +9,7 @@ require "rein/constraint/numericality"
 require "rein/constraint/presence"
 require "rein/type/enum"
 require "rein/view"
+require "rein/schema"
 
 module ActiveRecord
   module ConnectionAdapters # :nodoc:
@@ -32,6 +33,7 @@ module ActiveRecord
       include Rein::Constraint::Presence
       include Rein::Type::Enum
       include Rein::View
+      include Rein::Schema
     end
   end
 end
