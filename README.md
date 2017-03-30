@@ -25,6 +25,7 @@ can easily tame the data in your database.
   * [Data types](#data-types)
     * [Enumerated types](#enumerated-types)
   * [Views](#views)
+  * [Schemas](#schemas)
   * [Example](#example)
   * [Contributing](#contributing)
   * [License](#license)
@@ -237,14 +238,31 @@ To drop a view from the database:
 drop_view :available_books
 ```
 
+## Schemas
+
+*(PostgreSQL only)*
+
+A database can contain one or more named schemas, which in turn contain tables.
+Sometimes it might be helpful to split your database into multiple schemas to
+logically group tables together.
+
+```ruby
+create_schema :archive
+```
+
+To drop a schema from the database:
+
+```ruby
+drop_schema :archive
+```
+
 ## Example
 
 Let's have a look at constraining database values for this simple library
-application.
-
-Here we have a table of authors:
+application:
 
 ```ruby
+# The `authors` table contains all the authors of the books in the library.
 create_table :authors do |t|
   t.string :name, null: false
   t.timestamps, null: false
@@ -252,11 +270,10 @@ end
 
 # An author must have a name.
 add_presence_constraint :authors, :name
-```
-
-We also have a table of books:
 
 ```ruby
+# The `books` table contains all the books in the library, and their state
+(i.e. whether they are on loan or available).
 create_table :books do |t|
   t.belongs_to :author, null: false
   t.string :title, null: false
@@ -266,9 +283,9 @@ create_table :books do |t|
   t.timestamps, null: false
 end
 
-# A book should always belong to an author. The database should prevent us from
-# deleteing an author who has books.
-add_foreign_key_constraint :books, :authors, on_delete: :restrict
+# A book should always belong to an author. The database should automatically
+delete an author's books when we delete an author.
+add_foreign_key_constraint :books, :authors, on_delete: :cascade
 
 # A book must have a non-empty title.
 add_presence_constraint :books, :title
@@ -284,6 +301,23 @@ add_numericality_constraint :books, :published_year,
 add_numericality_constraint :books, :published_month,
   greater_than_or_equal_to: 1,
   less_than_or_equal_to: 12
+
+# The `archive` schema contains all of the archived data. We want to keep this
+separate from the `public` schema.
+create_schema :archive
+
+# The `archive.books` table contains all the achived books.
+create_table "archive.books" do |t|
+  t.belongs_to :author, null: false
+  t.string :title, null: false
+end
+
+# A book should always belong to an author. The database should prevent us from
+# deleteing an author who has books.
+add_foreign_key_constraint "archive.books", :authors, on_delete: :restrict
+
+# A book must have a non-empty title.
+add_presence_constraint "archive.books", :title
 ```
 
 ## Contributing
