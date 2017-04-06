@@ -94,7 +94,7 @@ For example, we can ensure that `state` column values can only ever be
 `available` or `on_loan`:
 
 ```ruby
-add_inclusion_constraint :books, :state, in: %w(available on_loan)
+add_inclusion_constraint :books, :state, in: %w[available on_loan]
 ```
 
 To remove an inclusion constraint:
@@ -108,7 +108,7 @@ certain conditions, like so:
 
 ```ruby
 add_inclusion_constraint :books, :state,
-  in: %w(available on_loan),
+  in: %w[available on_loan],
   if: "deleted_at IS NULL"
 ```
 
@@ -116,7 +116,7 @@ You may optionally provide a `name` option to customize the name:
 
 ```ruby
 add_inclusion_constraint :books, :state,
-  in: %w(available on_loan),
+  in: %w[available on_loan],
   name: "books_state_is_valid"
 ```
 
@@ -211,7 +211,7 @@ remove_presence_constraint :books, :title
 An enum is a data type that represents a static, ordered set of values.
 
 ```ruby
-create_enum_type :book_type, ['paperback', 'hardcover']
+create_enum_type :book_type, %w[paperback hardcover]
 ```
 
 To drop an enum type from the database:
@@ -262,7 +262,7 @@ Let's have a look at constraining database values for this simple library
 application:
 
 ```ruby
-# The `authors` table contains all the authors of the books in the library.
+# The authors table contains all the authors of the books in the library.
 create_table :authors do |t|
   t.string :name, null: false
   t.timestamps, null: false
@@ -271,9 +271,8 @@ end
 # An author must have a name.
 add_presence_constraint :authors, :name
 
-```ruby
-# The `books` table contains all the books in the library, and their state
-(i.e. whether they are on loan or available).
+# The books table contains all the books in the library, and their state
+# (i.e. whether they are on loan or available).
 create_table :books do |t|
   t.belongs_to :author, null: false
   t.string :title, null: false
@@ -284,14 +283,14 @@ create_table :books do |t|
 end
 
 # A book should always belong to an author. The database should automatically
-delete an author's books when we delete an author.
+# delete an author's books when we delete an author.
 add_foreign_key_constraint :books, :authors, on_delete: :cascade
 
 # A book must have a non-empty title.
 add_presence_constraint :books, :title
 
 # State is always either "available" or "on_loan".
-add_inclusion_constraint :books, :state, in: %w(available on_loan)
+add_inclusion_constraint :books, :state, in: %w[available on_loan]
 
 # Our library doesn't deal in classics.
 add_numericality_constraint :books, :published_year,
@@ -303,7 +302,7 @@ add_numericality_constraint :books, :published_month,
   less_than_or_equal_to: 12
 
 # The `archive` schema contains all of the archived data. We want to keep this
-separate from the `public` schema.
+# separate from the `public` schema.
 create_schema :archive
 
 # The `archive.books` table contains all the achived books.
