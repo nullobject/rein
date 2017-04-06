@@ -34,3 +34,7 @@ Style/SpaceInsideHashLiteralBraces:
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    "%w": "[]"

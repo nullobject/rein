@@ -7,4 +7,4 @@ RSpec::Core::RakeTask.new(:spec)
 RuboCop::RakeTask.new
 
 task default: :test
-task test: %w(spec rubocop)
+task test: %w[spec rubocop]
