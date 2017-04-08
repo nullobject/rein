@@ -343,4 +343,4 @@ add_presence_constraint "archive.books", :title
 
 ## License
 
-Rein is licensed under the [MIT License](/LICENSE).
+Rein is licensed under the [MIT License](/LICENSE.md).
