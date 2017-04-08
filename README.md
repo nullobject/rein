@@ -212,7 +212,7 @@ is the same as adding `NOT NULL` to a column, the difference being that it can
 be _applied conditionally_.
 
 For example, we can add a constraint to enforce that a book has a `due_date`,
-but only if it is `on_loan`:
+but only if it's `on_loan`:
 
 ```ruby
 add_null_constraint :books, :due_date, if: "state = 'on_loan'"
@@ -280,65 +280,81 @@ drop_schema :archive
 
 ## Example
 
-Let's have a look at constraining database values for this simple library
-application:
+Let's have a look at some example migrations to constrain database values for
+our simple library application:
 
 ```ruby
-# The authors table contains all the authors of the books in the library.
-create_table :authors do |t|
-  t.string :name, null: false
-  t.timestamps, null: false
+class CreateAuthorsTable < ActiveRecord::Migration
+  def change
+    # The authors table contains all the authors of the books in the library.
+    create_table :authors do |t|
+      t.string :name, null: false
+      t.timestamps, null: false
+    end
+
+    # An author must have a name.
+    add_presence_constraint :authors, :name
+  end
 end
 
-# An author must have a name.
-add_presence_constraint :authors, :name
+class CreateBooksTable < ActiveRecord::Migration
+  def change
+    # The books table contains all the books in the library, and their state
+    # (i.e. whether they are on loan or available).
+    create_table :books do |t|
+      t.belongs_to :author, null: false
+      t.string :title, null: false
+      t.string :state, null: false
+      t.integer :published_year, null: false
+      t.integer :published_month, null: false
+      t.date :due_date
+      t.timestamps, null: false
+    end
 
-# The books table contains all the books in the library, and their state
-# (i.e. whether they are on loan or available).
-create_table :books do |t|
-  t.belongs_to :author, null: false
-  t.string :title, null: false
-  t.string :state, null: false
-  t.integer :published_year, null: false
-  t.integer :published_month, null: false
-  t.timestamps, null: false
+    # A book should always belong to an author. The database should
+    # automatically delete an author's books when we delete an author.
+    add_foreign_key_constraint :books, :authors, on_delete: :cascade
+
+    # A book must have a non-empty title.
+    add_presence_constraint :books, :title
+
+    # State is always either "available", "on_loan", or "on_hold".
+    add_inclusion_constraint :books, :state, in: %w[available on_loan on_hold]
+
+    # Our library doesn't deal in classics.
+    add_numericality_constraint :books, :published_year,
+      greater_than_or_equal_to: 1980
+
+    # Month is always between 1 and 12.
+    add_numericality_constraint :books, :published_month,
+      greater_than_or_equal_to: 1,
+      less_than_or_equal_to: 12
+
+    # A book has a due date if it is on loan.
+    add_null_constraint :books, :due_date, if: "state = 'on_loan'"
+  end
 end
 
-# A book should always belong to an author. The database should automatically
-# delete an author's books when we delete an author.
-add_foreign_key_constraint :books, :authors, on_delete: :cascade
+class CreateArchivedBooksTable < ActiveRecord::Migration
+  def change
+    # The archive schema contains all of the archived data. We want to keep
+    # this separate from the public schema.
+    create_schema :archive
 
-# A book must have a non-empty title.
-add_presence_constraint :books, :title
+    # The archive.books table contains all the achived books.
+    create_table "archive.books" do |t|
+      t.belongs_to :author, null: false
+      t.string :title, null: false
+    end
 
-# State is always either "available" or "on_loan".
-add_inclusion_constraint :books, :state, in: %w[available on_loan]
+    # A book should always belong to an author. The database should prevent us
+    # from deleteing an author who has books.
+    add_foreign_key_constraint "archive.books", :authors, on_delete: :restrict
 
-# Our library doesn't deal in classics.
-add_numericality_constraint :books, :published_year,
-  greater_than_or_equal_to: 1980
-
-# Month is always between 1 and 12.
-add_numericality_constraint :books, :published_month,
-  greater_than_or_equal_to: 1,
-  less_than_or_equal_to: 12
-
-# The `archive` schema contains all of the archived data. We want to keep this
-# separate from the `public` schema.
-create_schema :archive
-
-# The `archive.books` table contains all the achived books.
-create_table "archive.books" do |t|
-  t.belongs_to :author, null: false
-  t.string :title, null: false
+    # A book must have a non-empty title.
+    add_presence_constraint "archive.books", :title
+  end
 end
-
-# A book should always belong to an author. The database should prevent us from
-# deleteing an author who has books.
-add_foreign_key_constraint "archive.books", :authors, on_delete: :restrict
-
-# A book must have a non-empty title.
-add_presence_constraint "archive.books", :title
 ```
 
 ## License
