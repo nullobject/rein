@@ -28,7 +28,6 @@ can easily tame the data in your database.
   * [Views](#views)
   * [Schemas](#schemas)
   * [Example](#example)
-  * [Contributing](#contributing)
   * [License](#license)
 
 ## Getting started
