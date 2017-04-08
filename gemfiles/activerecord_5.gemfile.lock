@@ -3,6 +3,7 @@ PATH
   specs:
     rein (2.0.0)
       activerecord (>= 4.0.0, < 6)
+      activesupport (>= 4.0.0, < 6)
 
 GEM
   remote: http://rubygems.org/
@@ -30,6 +31,7 @@ GEM
     minitest (5.10.1)
     parser (2.4.0.0)
       ast (~> 2.2)
+    pg (0.20.0)
     powerpack (0.1.1)
     rainbow (2.2.1)
     rake (12.0.0)
@@ -66,10 +68,11 @@ DEPENDENCIES
   activerecord (~> 5.0.2)
   appraisal (~> 2.1)
   bundler (~> 1.14)
+  pg
   rake (~> 12.0)
   rein!
   rspec (~> 3.5)
   rubocop (~> 0.47)
 
 BUNDLED WITH
-   1.14.5
+   1.14.6
