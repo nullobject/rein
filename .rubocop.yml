@@ -17,6 +17,8 @@ Metrics/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
+  Exclude:
+    - "spec/**/*"
   Max: 11
 
 Style/BlockDelimiters:
