@@ -4,6 +4,8 @@
 
 - Add `if` option to inclusion constraints.
 - Add `name` option to constraints.
+- Add null constraint.
+- Ensure presence constraint enforces not null.
 
 ## 2.0.0
 
