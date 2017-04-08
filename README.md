@@ -22,6 +22,7 @@ can easily tame the data in your database.
     * [Inclusion constraints](#inclusion-constraints)
     * [Numericality constraints](#numericality-constraints)
     * [Presence constraints](#presence-constraints)
+    * [Null constraints](#null-constraints)
   * [Data types](#data-types)
     * [Enumerated types](#enumerated-types)
   * [Views](#views)
@@ -200,6 +201,27 @@ To remove a presence constraint:
 
 ```ruby
 remove_presence_constraint :books, :title
+```
+
+### Null constraints
+
+*(PostgreSQL only)*
+
+A null constraint ensures that a column does *not* contain a null value. This
+is the same as adding `NOT NULL` to a column, the difference being that it can
+be _applied conditionally_.
+
+For example, we can add a constraint to enforce that a book has a `due_date`,
+but only if it is `on_loan`:
+
+```ruby
+add_null_constraint :books, :due_date, if: "state = 'on_loan'"
+```
+
+To remove a null constraint:
+
+```ruby
+remove_null_constraint :books, :due_date
 ```
 
 ## Data types

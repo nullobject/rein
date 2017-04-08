@@ -14,6 +14,7 @@ class CreateBooksTable < ActiveRecord::Migration
 
       add_presence_constraint :books, :title
       add_inclusion_constraint :books, :state, in: %w[available on_loan on_hold]
+      add_null_constraint :books, :due_date, if: "state = 'on_loan'"
       add_numericality_constraint :books, :published_month, greater_than_or_equal_to: 1, less_than_or_equal_to: 12
     end
   end
@@ -45,6 +46,11 @@ RSpec.describe Book do
   it "raises an error if the state is invalid" do
     expect { create_book(state: "burned") }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
     expect { create_book(state: "on_hold") }.to_not raise_error
+  end
+
+  it "raises an error if the due date is not present and the book is on loan" do
+    expect { create_book(state: "on_loan") }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
+    expect { create_book(state: "on_loan", due_date: Time.now) }.to_not raise_error
   end
 
   it "raises an error if the published month is not between 1 and 12" do

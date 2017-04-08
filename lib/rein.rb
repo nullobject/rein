@@ -5,6 +5,7 @@ require "rein/constraint/options"
 require "rein/constraint/primary_key"
 require "rein/constraint/foreign_key"
 require "rein/constraint/inclusion"
+require "rein/constraint/null"
 require "rein/constraint/numericality"
 require "rein/constraint/presence"
 require "rein/type/enum"
@@ -29,6 +30,7 @@ module ActiveRecord
       include Rein::Constraint::PrimaryKey
       include Rein::Constraint::ForeignKey
       include Rein::Constraint::Inclusion
+      include Rein::Constraint::Null
       include Rein::Constraint::Numericality
       include Rein::Constraint::Presence
       include Rein::Type::Enum
