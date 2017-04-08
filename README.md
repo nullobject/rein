@@ -341,15 +341,6 @@ add_foreign_key_constraint "archive.books", :authors, on_delete: :restrict
 add_presence_constraint "archive.books", :title
 ```
 
-## Contributing
-
-Pull requests are welcome. Please ensure that you run the tests before
-submitting your PR:
-
-```
-> bundle exec rake
-```
-
 ## License
 
 Rein is licensed under the [MIT License](/LICENSE).
