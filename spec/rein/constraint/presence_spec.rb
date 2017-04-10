@@ -7,7 +7,13 @@ RSpec.describe Rein::Constraint::Presence do
     end.new
   end
 
-  before { allow(adapter).to receive(:execute) }
+  let(:dir) { double(up: nil, down: nil) }
+
+  before do
+    allow(dir).to receive(:up).and_yield
+    allow(adapter).to receive(:reversible).and_yield(dir)
+    allow(adapter).to receive(:execute)
+  end
 
   describe "#add_presence_constraint" do
     context "given a table and attribute" do

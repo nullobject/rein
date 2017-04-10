@@ -7,7 +7,13 @@ RSpec.describe Rein::Constraint::ForeignKey do
     end.new
   end
 
-  before { allow(adapter).to receive(:execute) }
+  let(:dir) { double(up: nil, down: nil) }
+
+  before do
+    allow(dir).to receive(:up).and_yield
+    allow(adapter).to receive(:reversible).and_yield(dir)
+    allow(adapter).to receive(:execute)
+  end
 
   describe "#add_foreign_key_constraint" do
     before do

@@ -4,7 +4,23 @@ module Rein
   module Constraint
     # This module contains methods for defining foreign key constraints.
     module ForeignKey
-      def add_foreign_key_constraint(referencing_table, referenced_table, options = {})
+      def add_foreign_key_constraint(*args)
+        reversible do |dir|
+          dir.up { _add_foreign_key_constraint(*args) }
+          dir.down { _remove_foreign_key_constraint(*args) }
+        end
+      end
+
+      def remove_foreign_key_constraint(*args)
+        reversible do |dir|
+          dir.up { _remove_foreign_key_constraint(*args) }
+          dir.down { _add_foreign_key_constraint(*args) }
+        end
+      end
+
+      private
+
+      def _add_foreign_key_constraint(referencing_table, referenced_table, options = {})
         referencing_attribute = (options[:referencing] || "#{referenced_table.to_s.singularize}_id").to_sym
         referenced_attribute = (options[:referenced] || "id").to_sym
 
@@ -22,9 +38,8 @@ module Rein
         # A foreign key constraint doesn't have an implicit index.
         add_index(referencing_table, referencing_attribute) if options[:add_index] == true
       end
-      alias add_foreign_key add_foreign_key_constraint
 
-      def remove_foreign_key_constraint(referencing_table, referenced_table, options = {})
+      def _remove_foreign_key_constraint(referencing_table, referenced_table, options = {})
         referencing_attribute = options[:referencing] || "#{referenced_table.to_s.singularize}_id".to_sym
 
         name = options[:name] || default_constraint_name(referencing_table, referencing_attribute)
@@ -38,9 +53,6 @@ module Rein
         # A foreign key constraint doesn't have an implicit index.
         remove_index(referencing_table, referencing_attribute) if options[:remove_index] == true
       end
-      alias remove_foreign_key remove_foreign_key_constraint
-
-      private
 
       def referential_action(action)
         case action.to_sym

@@ -13,7 +13,23 @@ module Rein
         less_than_or_equal_to: :<=
       }.freeze
 
-      def add_numericality_constraint(table, attribute, options = {})
+      def add_numericality_constraint(*args)
+        reversible do |dir|
+          dir.up { _add_numericality_constraint(*args) }
+          dir.down { _remove_numericality_constraint(*args) }
+        end
+      end
+
+      def remove_numericality_constraint(*args)
+        reversible do |dir|
+          dir.up { _remove_numericality_constraint(*args) }
+          dir.down { _add_numericality_constraint(*args) }
+        end
+      end
+
+      private
+
+      def _add_numericality_constraint(table, attribute, options = {})
         name = constraint_name(table, attribute, options)
 
         conditions = OPERATORS.slice(*options.keys).map do |key, operator|
@@ -26,7 +42,7 @@ module Rein
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end
 
-      def remove_numericality_constraint(table, attribute, options = {})
+      def _remove_numericality_constraint(table, attribute, options = {})
         name = constraint_name(table, attribute, options)
         execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
       end
