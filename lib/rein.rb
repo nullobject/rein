@@ -1,15 +1,13 @@
 require "active_record"
-
-require "rein/constraint/options"
-require "rein/constraint/primary_key"
 require "rein/constraint/foreign_key"
 require "rein/constraint/inclusion"
 require "rein/constraint/null"
 require "rein/constraint/numericality"
 require "rein/constraint/presence"
+require "rein/constraint/primary_key"
+require "rein/schema"
 require "rein/type/enum"
 require "rein/view"
-require "rein/schema"
 
 module ActiveRecord
   class Migration # :nodoc:

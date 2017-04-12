@@ -83,17 +83,17 @@ RSpec.describe Rein::Constraint::ForeignKey do
       end
     end
 
-    describe "with a given add_index option" do
+    describe "with an index option" do
       it "adds a constraint" do
         expect(adapter).to receive(:add_index).with(:books, :person_id)
-        adapter.add_foreign_key_constraint(:books, :people, add_index: true)
+        adapter.add_foreign_key_constraint(:books, :people, index: true)
       end
     end
 
-    describe "with a referencing attribute and a add_index option" do
+    describe "with a referencing attribute and an index option" do
       it "adds a constraint" do
         expect(adapter).to receive(:add_index).with(:books, :author_id)
-        adapter.add_foreign_key_constraint(:books, :people, referencing: :author_id, add_index: true)
+        adapter.add_foreign_key_constraint(:books, :people, referencing: :author_id, index: true)
       end
     end
   end
@@ -124,17 +124,17 @@ RSpec.describe Rein::Constraint::ForeignKey do
       end
     end
 
-    describe "with a given remove_index option" do
+    describe "with an index option" do
       it "removes a constraint" do
         expect(adapter).to receive(:remove_index).with(:books, :person_id)
-        adapter.remove_foreign_key_constraint(:books, :people, remove_index: true)
+        adapter.remove_foreign_key_constraint(:books, :people, index: true)
       end
     end
 
-    describe "with a referencing attribute and a remove_index option" do
+    describe "with a referencing attribute and an index option" do
       it "removes a constraint" do
         expect(adapter).to receive(:remove_index).with(:books, :author_id)
-        adapter.remove_foreign_key_constraint(:books, :people, referencing: :author_id, remove_index: true)
+        adapter.remove_foreign_key_constraint(:books, :people, referencing: :author_id, index: true)
       end
     end
   end
