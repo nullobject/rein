@@ -12,6 +12,9 @@ database integrity without resorting to hand-crafted SQL. Rein (pronounced
 "rain") adds a handful of methods to your ActiveRecord migrations so that you
 can easily tame the data in your database.
 
+All methods in the DSL are automatically *reversible*, so you can take
+advantage of reversible Rails migrations.
+
 ## Table of contents
 
 * [Rein](#rein)
@@ -34,7 +37,24 @@ can easily tame the data in your database.
 
 Install the gem:
 
-    gem install rein
+```
+> gem install rein
+```
+
+Add a constraint to your migrations:
+
+```ruby
+class CreateAuthorsTable < ActiveRecord::Migration
+  def change
+    create_table :authors do |t|
+      t.string :name, null: false
+    end
+
+    # An author must have a name.
+    add_presence_constraint :authors, :name
+  end
+end
+```
 
 ## Constraint types
 
@@ -48,6 +68,14 @@ For example, let's say that we want to constrain the `author_id` column in the
 
 ```ruby
 add_foreign_key_constraint :books, :authors
+```
+
+Adding a foreign key doesn't automatically create an index on the referenced
+column. Having an index will generally speed up any joins you perform on the
+foreign key. To create an index you can specify the `index` option:
+
+```ruby
+add_foreign_key_constraint :books, :authors, index: true
 ```
 
 Rein will automatically infer the column names for the tables, but if we need
@@ -85,8 +113,6 @@ remove_foreign_key_constraint :books, :authors
 
 ### Inclusion constraints
 
-*(PostgreSQL only)*
-
 An inclusion constraint specifies the possible values that a column value can
 take.
 
@@ -121,8 +147,6 @@ add_inclusion_constraint :books, :state,
 ```
 
 ### Numericality constraints
-
-*(PostgreSQL only)*
 
 A numericality constraint specifies the range of values that a numeric column
 value can take.
@@ -172,8 +196,6 @@ remove_numericality_constraint :books, :publication_month
 
 ### Presence constraints
 
-*(PostgreSQL only)*
-
 A presence constraint ensures that a string column value is non-empty.
 
 A `NOT NULL` constraint will be satisfied by an empty string, but sometimes may
@@ -204,8 +226,6 @@ remove_presence_constraint :books, :title
 
 ### Null constraints
 
-*(PostgreSQL only)*
-
 A null constraint ensures that a column does *not* contain a null value. This
 is the same as adding `NOT NULL` to a column, the difference being that it can
 be _applied conditionally_.
@@ -226,8 +246,6 @@ remove_null_constraint :books, :due_date
 ## Data types
 
 ### Enumerated types
-
-*(PostgreSQL only)*
 
 An enum is a data type that represents a static, ordered set of values.
 
@@ -260,8 +278,6 @@ drop_view :available_books
 ```
 
 ## Schemas
-
-*(PostgreSQL only)*
 
 A database can contain one or more named schemas, which in turn contain tables.
 Sometimes it might be helpful to split your database into multiple schemas to
