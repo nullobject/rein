@@ -6,17 +6,33 @@ module Rein
     module Enum
       include ActiveRecord::ConnectionAdapters::Quoting
 
-      def create_enum_type(enum_name, enum_values = [])
-        enum_values = enum_values.map { |value| quote(value) }.join(", ")
-        execute("CREATE TYPE #{enum_name} AS ENUM (#{enum_values})")
+      def create_enum_type(*args)
+        reversible do |dir|
+          dir.up { _create_enum_type(*args) }
+          dir.down { _drop_enum_type(*args) }
+        end
       end
 
-      def drop_enum_type(enum_name)
-        execute("DROP TYPE #{enum_name}")
+      def drop_enum_type(*args)
+        reversible do |dir|
+          dir.up { _drop_enum_type(*args) }
+          dir.down { _create_enum_type(*args) }
+        end
       end
 
       def add_enum_value(enum_name, new_value)
         execute("ALTER TYPE #{enum_name} ADD VALUE #{quote(new_value)}")
+      end
+
+      private
+
+      def _create_enum_type(enum_name, enum_values = [])
+        enum_values = enum_values.map { |value| quote(value) }.join(", ")
+        execute("CREATE TYPE #{enum_name} AS ENUM (#{enum_values})")
+      end
+
+      def _drop_enum_type(enum_name)
+        execute("DROP TYPE #{enum_name}")
       end
     end
   end

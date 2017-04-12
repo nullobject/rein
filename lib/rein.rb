@@ -1,41 +1,24 @@
 require "active_record"
-require "active_record/connection_adapters/abstract_mysql_adapter"
-
-require "rein/constraint/options"
-require "rein/constraint/primary_key"
 require "rein/constraint/foreign_key"
 require "rein/constraint/inclusion"
 require "rein/constraint/null"
 require "rein/constraint/numericality"
 require "rein/constraint/presence"
+require "rein/constraint/primary_key"
+require "rein/schema"
 require "rein/type/enum"
 require "rein/view"
-require "rein/schema"
 
 module ActiveRecord
-  module ConnectionAdapters # :nodoc:
-    class MysqlAdapter < AbstractAdapter # :nodoc:
-      include Rein::Constraint::PrimaryKey
-      include Rein::Constraint::ForeignKey
-      include Rein::View
-    end
-
-    class Mysql2Adapter < AbstractMysqlAdapter # :nodoc:
-      include Rein::Constraint::PrimaryKey
-      include Rein::Constraint::ForeignKey
-      include Rein::View
-    end
-
-    class PostgreSQLAdapter < AbstractAdapter # :nodoc:
-      include Rein::Constraint::PrimaryKey
-      include Rein::Constraint::ForeignKey
-      include Rein::Constraint::Inclusion
-      include Rein::Constraint::Null
-      include Rein::Constraint::Numericality
-      include Rein::Constraint::Presence
-      include Rein::Type::Enum
-      include Rein::View
-      include Rein::Schema
-    end
+  class Migration # :nodoc:
+    include Rein::Constraint::ForeignKey
+    include Rein::Constraint::Inclusion
+    include Rein::Constraint::Null
+    include Rein::Constraint::Numericality
+    include Rein::Constraint::Presence
+    include Rein::Constraint::PrimaryKey
+    include Rein::Schema
+    include Rein::Type::Enum
+    include Rein::View
   end
 end

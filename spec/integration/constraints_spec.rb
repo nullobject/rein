@@ -1,32 +1,12 @@
 require "spec_helper"
 
-class CreateBooksTable < ActiveRecord::Migration
-  def change
-    suppress_messages do
-      execute "DROP TABLE IF EXISTS books"
-
-      create_table :books do |t|
-        t.string :title, null: false
-        t.string :state, null: false
-        t.integer :published_month, null: false
-        t.date :due_date
-        t.string :holder
-      end
-
-      add_presence_constraint :books, :title
-      add_inclusion_constraint :books, :state, in: %w[available on_loan on_hold]
-      add_numericality_constraint :books, :published_month, greater_than_or_equal_to: 1, less_than_or_equal_to: 12
-      add_null_constraint :books, :due_date, if: "state = 'on_loan'"
-      add_presence_constraint :books, :holder, if: "state = 'on_hold'"
-    end
-  end
-end
-
+class Author < ActiveRecord::Base; end
 class Book < ActiveRecord::Base; end
 
 def create_book(attributes = {})
   attributes = {
-    title: "foo",
+    author_id: 1,
+    title: "On the Origin of Species",
     state: "available",
     published_month: 1
   }.update(attributes)
@@ -34,15 +14,20 @@ def create_book(attributes = {})
   Book.create!(attributes)
 end
 
-RSpec.describe Book do
-  before(:all) do
-    ActiveRecord::Base.establish_connection(adapter: "postgresql", database: "rein_test")
-    CreateBooksTable.new.migrate(:up)
+RSpec.describe "Constraints" do
+  before do
+    Author.delete_all
+    Author.create!(id: 1, name: "Charles Darwin")
+  end
+
+  it "raises an error if the author is not present" do
+    expect { create_book(author_id: 2) }.to raise_error(ActiveRecord::InvalidForeignKey)
+    expect { create_book(author_id: 1) }.to_not raise_error
   end
 
   it "raises an error if the title is not present" do
     expect { create_book(title: "") }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
-    expect { create_book(title: "The Origin of Species") }.to_not raise_error
+    expect { create_book(title: "On the Origin of Species") }.to_not raise_error
   end
 
   it "raises an error if the state is invalid" do
@@ -57,7 +42,7 @@ RSpec.describe Book do
 
   it "raises an error if holder is not present and the book is on hold" do
     expect { create_book(state: "on_hold") }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
-    expect { create_book(state: "on_hold", holder: "Charles Darwin") }.to_not raise_error
+    expect { create_book(state: "on_hold", holder: "Jane Citizen") }.to_not raise_error
   end
 
   it "raises an error if the published month is not between 1 and 12" do
