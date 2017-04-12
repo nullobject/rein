@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0
+
+- Dropped MySQL support.
+- Reversible migrations.
+- Add `index` option to `add_foreign_key_constraint`.
+
 ## 2.1.0
 
 - Add `if` option to inclusion constraints.
