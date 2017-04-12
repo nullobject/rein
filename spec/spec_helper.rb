@@ -23,6 +23,7 @@ RSpec.configure do |config|
     ActiveRecord::Base.establish_connection(adapter: "postgresql", database: "rein_test")
     ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS schema_migrations")
     ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS books")
+    ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS authors")
     ActiveRecord::Migrator.migrate(MIGRATIONS_PATH)
   end
 end

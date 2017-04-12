@@ -1,5 +1,6 @@
 class AddConstraints < ActiveRecord::Migration
   def change
+    add_foreign_key_constraint :books, :authors, on_delete: :cascade, index: true
     add_presence_constraint :books, :title
     add_inclusion_constraint :books, :state, in: %w[available on_loan on_hold]
     add_numericality_constraint :books, :published_month, greater_than_or_equal_to: 1, less_than_or_equal_to: 12

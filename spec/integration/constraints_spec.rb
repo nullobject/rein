@@ -1,10 +1,12 @@
 require "spec_helper"
 
+class Author < ActiveRecord::Base; end
 class Book < ActiveRecord::Base; end
 
 def create_book(attributes = {})
   attributes = {
-    title: "foo",
+    author_id: 1,
+    title: "On the Origin of Species",
     state: "available",
     published_month: 1
   }.update(attributes)
@@ -13,9 +15,19 @@ def create_book(attributes = {})
 end
 
 RSpec.describe "Constraints" do
+  before do
+    Author.delete_all
+    Author.create!(id: 1, name: "Charles Darwin")
+  end
+
+  it "raises an error if the author is not present" do
+    expect { create_book(author_id: 2) }.to raise_error(ActiveRecord::InvalidForeignKey)
+    expect { create_book(author_id: 1) }.to_not raise_error
+  end
+
   it "raises an error if the title is not present" do
     expect { create_book(title: "") }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
-    expect { create_book(title: "The Origin of Species") }.to_not raise_error
+    expect { create_book(title: "On the Origin of Species") }.to_not raise_error
   end
 
   it "raises an error if the state is invalid" do
@@ -30,7 +42,7 @@ RSpec.describe "Constraints" do
 
   it "raises an error if holder is not present and the book is on hold" do
     expect { create_book(state: "on_hold") }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
-    expect { create_book(state: "on_hold", holder: "Charles Darwin") }.to_not raise_error
+    expect { create_book(state: "on_hold", holder: "Jane Citizen") }.to_not raise_error
   end
 
   it "raises an error if the published month is not between 1 and 12" do
