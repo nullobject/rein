@@ -6,5 +6,6 @@ class AddConstraints < ActiveRecord::Migration
     add_numericality_constraint :books, :published_month, greater_than_or_equal_to: 1, less_than_or_equal_to: 12
     add_null_constraint :books, :due_date, if: "state = 'on_loan'"
     add_presence_constraint :books, :holder, if: "state = 'on_hold'"
+    add_length_constraint :books, :call_number, greater_than_or_equal_to: 1, less_than_or_equal_to: 255
   end
 end

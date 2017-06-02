@@ -7,6 +7,7 @@ class CreateBooksTable < ActiveRecord::Migration
       t.integer :published_month, null: false
       t.date :due_date
       t.string :holder
+      t.text :call_number
     end
   end
 end

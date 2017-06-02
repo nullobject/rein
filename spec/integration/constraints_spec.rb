@@ -50,4 +50,10 @@ RSpec.describe "Constraints" do
     expect { create_book(published_month: 13) }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
     expect { create_book(published_month: 1) }.to_not raise_error
   end
+
+  it "raises an error if the call number length is not between 1 and 255" do
+    expect { create_book(call_number: "") }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
+    expect { create_book(call_number: "K" * 256) }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
+    expect { create_book(call_number: "KF8840 .F72 1999") }.to_not raise_error
+  end
 end
