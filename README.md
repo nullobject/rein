@@ -146,6 +146,54 @@ add_inclusion_constraint :books, :state,
   name: "books_state_is_valid"
 ```
 
+### Length constraints
+
+A length constraint specifies the range of values that the length of a string
+column value can take.
+
+For example, we can ensure that the `call_number` can only ever be a
+value between 1 and 255:
+
+```ruby
+add_length_constraint :books, :call_number,
+  greater_than_or_equal_to: 1,
+  less_than_or_equal_to: 255
+```
+
+Here's all the options for constraining the values:
+
+- `equal_to`
+- `not_equal_to`
+- `less_than`
+- `less_than_or_equal_to`
+- `greater_than`
+- `greater_than_or_equal_to`
+
+You may also include an `if` option to enforce the constraint only under
+certain conditions, like so:
+
+```ruby
+add_length_constraint :books, :call_number,
+  greater_than_or_equal_to: 1,
+  less_than_or_equal_to: 12,
+  if: "status = 'published'"
+```
+
+You may optionally provide a `name` option to customize the name:
+
+```ruby
+add_length_constraint :books, :call_number,
+  greater_than_or_equal_to: 1,
+  less_than_or_equal_to: 12,
+  name: "books_call_number_is_valid"
+```
+
+To remove a length constraint:
+
+```ruby
+remove_length_constraint :books, :call_number
+```
+
 ### Numericality constraints
 
 A numericality constraint specifies the range of values that a numeric column
