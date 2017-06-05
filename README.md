@@ -23,6 +23,7 @@ advantage of reversible Rails migrations.
   * [Constraint types](#constraint-types)
     * [Foreign key constraints](#foreign-key-constraints)
     * [Inclusion constraints](#inclusion-constraints)
+    * [Length constraints](#length-constraints)
     * [Numericality constraints](#numericality-constraints)
     * [Presence constraints](#presence-constraints)
     * [Null constraints](#null-constraints)
