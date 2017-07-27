@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.0
+- Add length constraint.
+
 ## 3.0.0
 
 - Dropped MySQL support.
