@@ -30,6 +30,12 @@ RSpec.describe "Constraints" do
     expect { create_book(title: "On the Origin of Species") }.to_not raise_error
   end
 
+  it "raises an error if the title contains a non-ASCII letter, non-number, or non-whitespace, non-tab character" do
+    expect { create_book(title: "&") }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
+    expect { create_book(title: "\tOn the Origin of Species") }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
+    expect { create_book(title: "On the Origin of Species") }.to_not raise_error
+  end
+
   it "raises an error if the state is invalid" do
     expect { create_book(state: "burned") }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
     expect { create_book(state: "available") }.to_not raise_error

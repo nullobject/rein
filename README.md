@@ -24,6 +24,7 @@ advantage of reversible Rails migrations.
     * [Foreign key constraints](#foreign-key-constraints)
     * [Inclusion constraints](#inclusion-constraints)
     * [Length constraints](#length-constraints)
+    * [Match constraints](#match-constraints)
     * [Numericality constraints](#numericality-constraints)
     * [Presence constraints](#presence-constraints)
     * [Null constraints](#null-constraints)
@@ -195,6 +196,37 @@ To remove a length constraint:
 remove_length_constraint :books, :call_number
 ```
 
+### Match constraints
+
+A match constraint ensures that a string column value matches (or does not match)
+a POSIX-style regular expression.
+
+For example, we can ensure that the `title` can only contain printable ASCII
+characters, but not ampersands:
+
+```ruby
+add_match_constraint :books, :title, accepts: '\A[ -~]*\Z', rejects: '&'
+```
+
+If you only want to enforce the constraint under certain conditions,
+you can pass an optional `if` option:
+
+```ruby
+add_match_constraint :books, :title, accepts: '\A[ -~]*\Z', if: "status = 'published'"
+```
+
+You may optionally provide a `name` option to customize the name:
+
+```ruby
+add_match_constraint :books, :title, name: "books_title_is_valid"
+```
+
+To remove a match constraint:
+
+```ruby
+remove_match_constraint :books, :title
+```
+
 ### Numericality constraints
 
 A numericality constraint specifies the range of values that a numeric column
@@ -247,8 +279,8 @@ remove_numericality_constraint :books, :publication_month
 
 A presence constraint ensures that a string column value is non-empty.
 
-A `NOT NULL` constraint will be satisfied by an empty string, but sometimes may
-you want to ensure that there is an actual value for a string:
+A `NOT NULL` constraint will be satisfied by an empty string, but sometimes you
+may want to ensure that there is an actual value for a string:
 
 ```ruby
 add_presence_constraint :books, :title

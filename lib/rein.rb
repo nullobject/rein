@@ -2,6 +2,7 @@ require "active_record"
 require "rein/constraint/foreign_key"
 require "rein/constraint/inclusion"
 require "rein/constraint/length"
+require "rein/constraint/match"
 require "rein/constraint/null"
 require "rein/constraint/numericality"
 require "rein/constraint/presence"
@@ -15,6 +16,7 @@ module ActiveRecord
     include Rein::Constraint::ForeignKey
     include Rein::Constraint::Inclusion
     include Rein::Constraint::Length
+    include Rein::Constraint::Match
     include Rein::Constraint::Null
     include Rein::Constraint::Numericality
     include Rein::Constraint::Presence
