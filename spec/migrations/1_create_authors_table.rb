@@ -1,4 +1,4 @@
-class CreateAuthorsTable < ActiveRecord::Migration
+class CreateAuthorsTable < CompatibleMigration
   def change
     create_table :authors do |t|
       t.string :name, null: false

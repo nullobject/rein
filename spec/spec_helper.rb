@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 
 require "rein"
+require "support/compatible_migration"
 
 MIGRATIONS_PATH = [File.expand_path("../migrations", __FILE__)].freeze
 

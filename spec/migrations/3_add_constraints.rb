@@ -1,4 +1,4 @@
-class AddConstraints < ActiveRecord::Migration
+class AddConstraints < CompatibleMigration
   def change
     add_foreign_key_constraint :books, :authors, on_delete: :cascade, index: true
     add_presence_constraint :books, :title
