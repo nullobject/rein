@@ -4,6 +4,10 @@ class TableConstraint < ActiveRecord::Base
   self.table_name = "information_schema.table_constraints"
 end
 
+class View < ActiveRecord::Base
+  self.table_name = "information_schema.views"
+end
+
 RSpec.describe "Reversible" do
   before do
     ActiveRecord::Migrator.migrate(MIGRATIONS_PATH)
@@ -37,5 +41,11 @@ RSpec.describe "Reversible" do
     expect(TableConstraint.where(constraint_name: "books_title_presence")).to exist
     ActiveRecord::Migrator.down(MIGRATIONS_PATH, 2)
     expect(TableConstraint.where(constraint_name: "books_title_presence")).to_not exist
+  end
+
+  it "reverses views" do
+    expect(View.where(table_name: "books_per_author")).to exist
+    ActiveRecord::Migrator.down(MIGRATIONS_PATH, 2)
+    expect(View.where(table_name: "books_per_author")).to_not exist
   end
 end

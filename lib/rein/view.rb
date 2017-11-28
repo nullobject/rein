@@ -21,7 +21,7 @@ module Rein
       execute("CREATE VIEW #{view_name} AS #{sql}")
     end
 
-    def _drop_view(view_name)
+    def _drop_view(view_name, *)
       execute("DROP VIEW #{view_name}")
     end
   end
