@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.0
+- Add match constraint.
+- Fix the rollback of change view migrations.
+
 ## 3.1.0
 - Add length constraint.
 
