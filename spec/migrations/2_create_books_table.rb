@@ -1,4 +1,4 @@
-class CreateBooksTable < CompatibleMigration
+class CreateBooksTable < Migration
   def change
     create_table :books do |t|
       if ActiveRecord::VERSION::STRING >= "5.0.0"

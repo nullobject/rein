@@ -1,4 +1,4 @@
-class CreateBooksPerAuthorView < CompatibleMigration
+class CreateBooksPerAuthorView < Migration
   def change
     create_view(
       :books_per_author,
