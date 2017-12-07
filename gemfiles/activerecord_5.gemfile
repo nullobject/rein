@@ -4,4 +4,4 @@ source "http://rubygems.org"
 
 gem "activerecord", "~> 5.0.2"
 
-gemspec :path => "../"
+gemspec path: "../"
