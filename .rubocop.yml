@@ -4,6 +4,9 @@ AllCops:
     - "gemfiles/**/*"
     - "rein.gemspec"
 
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
 Metrics/AbcSize:
   Max: 27
 
@@ -22,7 +25,7 @@ Metrics/MethodLength:
   Max: 11
 
 Style/BlockDelimiters:
-  Enabled: false
+  EnforcedStyle: semantic
 
 Style/Documentation:
   Exclude:
@@ -30,12 +33,6 @@ Style/Documentation:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
-
-Style/SpaceInsideHashLiteralBraces:
-  Enabled: false
-
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:

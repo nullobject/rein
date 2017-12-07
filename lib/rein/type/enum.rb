@@ -1,4 +1,4 @@
-require "active_record/connection_adapters/abstract/quoting"
+require 'active_record/connection_adapters/abstract/quoting'
 
 module Rein
   module Type
@@ -8,14 +8,14 @@ module Rein
 
       def create_enum_type(*args)
         reversible do |dir|
-          dir.up { _create_enum_type(*args) }
+          dir.up do _create_enum_type(*args) end
           dir.down { _drop_enum_type(*args) }
         end
       end
 
       def drop_enum_type(*args)
         reversible do |dir|
-          dir.up { _drop_enum_type(*args) }
+          dir.up do _drop_enum_type(*args) end
           dir.down { _create_enum_type(*args) }
         end
       end
@@ -27,7 +27,7 @@ module Rein
       private
 
       def _create_enum_type(enum_name, enum_values = [])
-        enum_values = enum_values.map { |value| quote(value) }.join(", ")
+        enum_values = enum_values.map { |value| quote(value) }.join(', ')
         execute("CREATE TYPE #{enum_name} AS ENUM (#{enum_values})")
       end
 

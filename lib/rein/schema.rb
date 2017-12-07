@@ -3,14 +3,14 @@ module Rein
   module Schema
     def create_schema(*args)
       reversible do |dir|
-        dir.up { _create_schema(*args) }
+        dir.up do _create_schema(*args) end
         dir.down { _drop_schema(*args) }
       end
     end
 
     def drop_schema(*args)
       reversible do |dir|
-        dir.up { _drop_schema(*args) }
+        dir.up do _drop_schema(*args) end
         dir.down { _create_schema(*args) }
       end
     end

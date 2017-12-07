@@ -3,14 +3,14 @@ module Rein
   module View
     def create_view(*args)
       reversible do |dir|
-        dir.up { _create_view(*args) }
+        dir.up do _create_view(*args) end
         dir.down { _drop_view(*args) }
       end
     end
 
     def drop_view(*args)
       reversible do |dir|
-        dir.up { _drop_view(*args) }
+        dir.up do _drop_view(*args) end
         dir.down { _create_view(*args) }
       end
     end

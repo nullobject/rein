@@ -1,4 +1,4 @@
-require "rein/util"
+require 'rein/util'
 
 module Rein
   module Constraint
@@ -8,14 +8,14 @@ module Rein
 
       def add_presence_constraint(*args)
         reversible do |dir|
-          dir.up { _add_presence_constraint(*args) }
+          dir.up do _add_presence_constraint(*args) end
           dir.down { _remove_presence_constraint(*args) }
         end
       end
 
       def remove_presence_constraint(*args)
         reversible do |dir|
-          dir.up { _remove_presence_constraint(*args) }
+          dir.up do _remove_presence_constraint(*args) end
           dir.down { _add_presence_constraint(*args) }
         end
       end
@@ -23,7 +23,7 @@ module Rein
       private
 
       def _add_presence_constraint(table, attribute, options = {})
-        name = Util.constraint_name(table, attribute, "presence", options)
+        name = Util.constraint_name(table, attribute, 'presence', options)
         conditions = Util.conditions_with_if(
           "(#{attribute} IS NOT NULL) AND (#{attribute} !~ '^\\s*$')",
           options
@@ -32,7 +32,7 @@ module Rein
       end
 
       def _remove_presence_constraint(table, attribute, options = {})
-        name = Util.constraint_name(table, attribute, "presence", options)
+        name = Util.constraint_name(table, attribute, 'presence', options)
         execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
       end
     end

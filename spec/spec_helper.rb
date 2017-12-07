@@ -1,9 +1,9 @@
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
-require "rein"
-require "support/migration"
+require 'rein'
+require 'support/migration'
 
-MIGRATIONS_PATH = [File.expand_path("../migrations", __FILE__)].freeze
+MIGRATIONS_PATH = [File.expand_path('../migrations', __FILE__)].freeze
 
 RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
@@ -21,11 +21,11 @@ RSpec.configure do |config|
   config.disable_monkey_patching!
 
   config.before(:suite) do
-    ActiveRecord::Base.establish_connection(adapter: "postgresql", database: "rein_test")
-    ActiveRecord::Base.connection.execute("DROP VIEW IF EXISTS books_per_author")
-    ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS schema_migrations")
-    ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS books")
-    ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS authors")
+    ActiveRecord::Base.establish_connection(adapter: 'postgresql', database: 'rein_test')
+    ActiveRecord::Base.connection.execute('DROP VIEW IF EXISTS books_per_author')
+    ActiveRecord::Base.connection.execute('DROP TABLE IF EXISTS schema_migrations')
+    ActiveRecord::Base.connection.execute('DROP TABLE IF EXISTS books')
+    ActiveRecord::Base.connection.execute('DROP TABLE IF EXISTS authors')
     ActiveRecord::Migrator.migrate(MIGRATIONS_PATH)
   end
 end

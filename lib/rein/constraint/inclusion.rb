@@ -1,4 +1,4 @@
-require "rein/util"
+require 'rein/util'
 
 module Rein
   module Constraint
@@ -8,14 +8,14 @@ module Rein
 
       def add_inclusion_constraint(*args)
         reversible do |dir|
-          dir.up { _add_inclusion_constraint(*args) }
+          dir.up do _add_inclusion_constraint(*args) end
           dir.down { _remove_inclusion_constraint(*args) }
         end
       end
 
       def remove_inclusion_constraint(*args)
         reversible do |dir|
-          dir.up { _remove_inclusion_constraint(*args) }
+          dir.up do _remove_inclusion_constraint(*args) end
           dir.down { _add_inclusion_constraint(*args) }
         end
       end
@@ -23,14 +23,14 @@ module Rein
       private
 
       def _add_inclusion_constraint(table, attribute, options = {})
-        name = Util.constraint_name(table, attribute, "inclusion", options)
-        values = options[:in].map { |value| quote(value) }.join(", ")
+        name = Util.constraint_name(table, attribute, 'inclusion', options)
+        values = options[:in].map { |value| quote(value) }.join(', ')
         conditions = Util.conditions_with_if("#{attribute} IN (#{values})", options)
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end
 
       def _remove_inclusion_constraint(table, attribute, options = {})
-        name = Util.constraint_name(table, attribute, "inclusion", options)
+        name = Util.constraint_name(table, attribute, 'inclusion', options)
         execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
       end
     end

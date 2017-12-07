@@ -1,15 +1,15 @@
-require "active_record"
-require "rein/constraint/foreign_key"
-require "rein/constraint/inclusion"
-require "rein/constraint/length"
-require "rein/constraint/match"
-require "rein/constraint/null"
-require "rein/constraint/numericality"
-require "rein/constraint/presence"
-require "rein/constraint/primary_key"
-require "rein/schema"
-require "rein/type/enum"
-require "rein/view"
+require 'active_record'
+require 'rein/constraint/foreign_key'
+require 'rein/constraint/inclusion'
+require 'rein/constraint/length'
+require 'rein/constraint/match'
+require 'rein/constraint/null'
+require 'rein/constraint/numericality'
+require 'rein/constraint/presence'
+require 'rein/constraint/primary_key'
+require 'rein/schema'
+require 'rein/type/enum'
+require 'rein/view'
 
 module ActiveRecord
   class Migration # :nodoc:

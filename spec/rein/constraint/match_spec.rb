@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe Rein::Constraint::Match do
   subject(:adapter) do
@@ -15,46 +15,46 @@ RSpec.describe Rein::Constraint::Match do
     allow(adapter).to receive(:execute)
   end
 
-  describe "#add_match_constraint" do
-    context "accept" do
-      it "adds a constraint" do
+  describe '#add_match_constraint' do
+    context 'accept' do
+      it 'adds a constraint' do
         expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_title_match CHECK (title ~ '\\A[a-z0-9]*\\Z')")
         adapter.add_match_constraint(:books, :title, accepts: '\A[a-z0-9]*\Z')
       end
     end
 
-    context "accept if" do
-      it "adds a constraint" do
+    context 'accept if' do
+      it 'adds a constraint' do
         expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_title_match CHECK (NOT (status = 'published') OR (title ~ '\\A[a-z0-9]*\\Z'))")
         adapter.add_match_constraint(:books, :title, accepts: '\A[a-z0-9]*\Z', if: "status = 'published'")
       end
     end
 
-    context "reject" do
-      it "adds a constraint" do
+    context 'reject' do
+      it 'adds a constraint' do
         expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_title_match CHECK (title !~ '\\A[a-z0-9]*\\Z')")
         adapter.add_match_constraint(:books, :title, rejects: '\A[a-z0-9]*\Z')
       end
     end
 
-    context "accept and reject" do
-      it "adds a constraint" do
+    context 'accept and reject' do
+      it 'adds a constraint' do
         expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_title_match CHECK (title ~ '\\A[a-z0-9]*\\Z' AND title !~ '\\A[0-9]*\\Z')")
         adapter.add_match_constraint(:books, :title, accepts: '\A[a-z0-9]*\Z', rejects: '\A[0-9]*\Z')
       end
     end
 
-    context "given a name option" do
-      it "adds a constraint with that name" do
+    context 'given a name option' do
+      it 'adds a constraint with that name' do
         expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_title_is_valid CHECK (title ~ '\\A[a-z0-9]*\\Z')")
-        adapter.add_match_constraint(:books, :title, accepts: '\A[a-z0-9]*\Z', name: "books_title_is_valid")
+        adapter.add_match_constraint(:books, :title, accepts: '\A[a-z0-9]*\Z', name: 'books_title_is_valid')
       end
     end
   end
 
-  describe "#remove_match_constraint" do
-    it "removes a constraint" do
-      expect(subject).to receive(:execute).with("ALTER TABLE books DROP CONSTRAINT books_title_match")
+  describe '#remove_match_constraint' do
+    it 'removes a constraint' do
+      expect(subject).to receive(:execute).with('ALTER TABLE books DROP CONSTRAINT books_title_match')
       subject.remove_match_constraint(:books, :title)
     end
   end

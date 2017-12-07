@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe Rein::View do
   subject(:adapter) do
@@ -15,16 +15,16 @@ RSpec.describe Rein::View do
     allow(adapter).to receive(:execute)
   end
 
-  describe "#create_view" do
-    it "creates a view" do
-      expect(adapter).to receive(:execute).with("CREATE VIEW foo AS SELECT * FROM bar")
-      adapter.create_view(:foo, "SELECT * FROM bar")
+  describe '#create_view' do
+    it 'creates a view' do
+      expect(adapter).to receive(:execute).with('CREATE VIEW foo AS SELECT * FROM bar')
+      adapter.create_view(:foo, 'SELECT * FROM bar')
     end
   end
 
-  describe "#drop_view" do
-    it "drops a view" do
-      expect(adapter).to receive(:execute).with("DROP VIEW foo")
+  describe '#drop_view' do
+    it 'drops a view' do
+      expect(adapter).to receive(:execute).with('DROP VIEW foo')
       adapter.drop_view(:foo)
     end
   end

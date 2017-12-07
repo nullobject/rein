@@ -2,7 +2,7 @@ class CreateBooksPerAuthorView < Migration
   def change
     create_view(
       :books_per_author,
-      "SELECT author_id, count(id) FROM books GROUP BY author_id"
+      'SELECT author_id, count(id) FROM books GROUP BY author_id'
     )
   end
 end
