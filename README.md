@@ -15,27 +15,27 @@ can easily tame the data in your database.
 All methods in the DSL are automatically *reversible*, so you can take
 advantage of reversible Rails migrations.
 
-## Table of contents
+## Table of Contents
 
 * [Rein](#rein)
-  * [Table of contents](#table-of-contents)
-  * [Getting started](#getting-started)
-  * [Constraint types](#constraint-types)
-    * [Foreign key constraints](#foreign-key-constraints)
-    * [Inclusion constraints](#inclusion-constraints)
-    * [Length constraints](#length-constraints)
-    * [Match constraints](#match-constraints)
-    * [Numericality constraints](#numericality-constraints)
-    * [Presence constraints](#presence-constraints)
-    * [Null constraints](#null-constraints)
-  * [Data types](#data-types)
-    * [Enumerated types](#enumerated-types)
+  * [Table of Contents](#table-of-contents)
+  * [Getting Started](#getting-started)
+  * [Constraint Types](#constraint-types)
+    * [Foreign Key Constraints](#foreign-key-constraints)
+    * [Inclusion Constraints](#inclusion-constraints)
+    * [Length Constraints](#length-constraints)
+    * [Match Constraints](#match-constraints)
+    * [Numericality Constraints](#numericality-constraints)
+    * [Presence Constraints](#presence-constraints)
+    * [Null Constraints](#null-constraints)
+  * [Data Types](#data-types)
+    * [Enumerated Types](#enumerated-types)
   * [Views](#views)
   * [Schemas](#schemas)
-  * [Example](#example)
+  * [Examples](#examples)
   * [License](#license)
 
-## Getting started
+## Getting Started
 
 Install the gem:
 
@@ -58,9 +58,9 @@ class CreateAuthorsTable < ActiveRecord::Migration
 end
 ```
 
-## Constraint types
+## Constraint Types
 
-### Foreign key constraints
+### Foreign Key Constraints
 
 A foreign key constraint specifies that the values in a column must match the
 values appearing in some row of another table.
@@ -113,7 +113,7 @@ To remove a foreign key constraint:
 remove_foreign_key_constraint :books, :authors
 ```
 
-### Inclusion constraints
+### Inclusion Constraints
 
 An inclusion constraint specifies the possible values that a column value can
 take.
@@ -148,7 +148,7 @@ add_inclusion_constraint :books, :state,
   name: "books_state_is_valid"
 ```
 
-### Length constraints
+### Length Constraints
 
 A length constraint specifies the range of values that the length of a string
 column value can take.
@@ -196,7 +196,7 @@ To remove a length constraint:
 remove_length_constraint :books, :call_number
 ```
 
-### Match constraints
+### Match Constraints
 
 A match constraint ensures that a string column value matches (or does not match)
 a POSIX-style regular expression.
@@ -227,7 +227,7 @@ To remove a match constraint:
 remove_match_constraint :books, :title
 ```
 
-### Numericality constraints
+### Numericality Constraints
 
 A numericality constraint specifies the range of values that a numeric column
 value can take.
@@ -275,7 +275,7 @@ To remove a numericality constraint:
 remove_numericality_constraint :books, :publication_month
 ```
 
-### Presence constraints
+### Presence Constraints
 
 A presence constraint ensures that a string column value is non-empty.
 
@@ -305,7 +305,7 @@ To remove a presence constraint:
 remove_presence_constraint :books, :title
 ```
 
-### Null constraints
+### Null Constraints
 
 A null constraint ensures that a column does *not* contain a null value. This
 is the same as adding `NOT NULL` to a column, the difference being that it can
@@ -324,9 +324,9 @@ To remove a null constraint:
 remove_null_constraint :books, :due_date
 ```
 
-## Data types
+## Data Types
 
-### Enumerated types
+### Enumerated Types
 
 An enum is a data type that represents a static, ordered set of values.
 
@@ -374,7 +374,7 @@ To drop a schema from the database:
 drop_schema :archive
 ```
 
-## Example
+## Examples
 
 Let's have a look at some example migrations to constrain database values for
 our simple library application:
