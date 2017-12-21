@@ -17,23 +17,21 @@ advantage of reversible Rails migrations.
 
 ## Table of Contents
 
-* [Rein](#rein)
-  * [Table of Contents](#table-of-contents)
-  * [Getting Started](#getting-started)
-  * [Constraint Types](#constraint-types)
-    * [Foreign Key Constraints](#foreign-key-constraints)
-    * [Inclusion Constraints](#inclusion-constraints)
-    * [Length Constraints](#length-constraints)
-    * [Match Constraints](#match-constraints)
-    * [Numericality Constraints](#numericality-constraints)
-    * [Presence Constraints](#presence-constraints)
-    * [Null Constraints](#null-constraints)
-  * [Data Types](#data-types)
-    * [Enumerated Types](#enumerated-types)
-  * [Views](#views)
-  * [Schemas](#schemas)
-  * [Examples](#examples)
-  * [License](#license)
+* [Getting Started](#getting-started)
+* [Constraint Types](#constraint-types)
+  * [Foreign Key Constraints](#foreign-key-constraints)
+  * [Inclusion Constraints](#inclusion-constraints)
+  * [Length Constraints](#length-constraints)
+  * [Match Constraints](#match-constraints)
+  * [Numericality Constraints](#numericality-constraints)
+  * [Presence Constraints](#presence-constraints)
+  * [Null Constraints](#null-constraints)
+* [Data Types](#data-types)
+  * [Enumerated Types](#enumerated-types)
+* [Views](#views)
+* [Schemas](#schemas)
+* [Examples](#examples)
+* [License](#license)
 
 ## Getting Started
 
