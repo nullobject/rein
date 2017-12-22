@@ -6,6 +6,7 @@ class Book < ActiveRecord::Base; end
 def create_book(attributes = {})
   attributes = {
     author_id: 1,
+    isbn: '0451529065',
     title: 'On the Origin of Species',
     state: 'available',
     published_month: 1
@@ -23,6 +24,23 @@ RSpec.describe 'Constraints' do
   it 'raises an error if the author is not present' do
     expect { create_book(author_id: 2) }.to raise_error(ActiveRecord::InvalidForeignKey)
     expect { create_book(author_id: 1) }.to_not raise_error
+  end
+
+  it 'raises an error if the ISBN is not unique' do
+    expect { create_book(isbn: 'foo') }.to_not raise_error
+    expect { create_book(isbn: 'bar') }.to_not raise_error
+    expect { create_book(isbn: 'foo') }.to raise_error(ActiveRecord::RecordNotUnique)
+  end
+
+  it 'allows checking unique ISBNs to be deferred' do
+    foo = create_book(isbn: 'foo')
+    bar = create_book(isbn: 'bar')
+
+    Author.transaction do
+      Author.connection.execute 'SET CONSTRAINTS books_isbn_unique DEFERRED'
+      foo.update!(isbn: 'bar')
+      bar.update!(isbn: 'foo')
+    end
   end
 
   it 'raises an error if the title is not present' do

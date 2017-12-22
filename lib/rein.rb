@@ -7,6 +7,7 @@ require 'rein/constraint/null'
 require 'rein/constraint/numericality'
 require 'rein/constraint/presence'
 require 'rein/constraint/primary_key'
+require 'rein/constraint/unique'
 require 'rein/schema'
 require 'rein/type/enum'
 require 'rein/view'
@@ -21,6 +22,7 @@ module ActiveRecord
     include Rein::Constraint::Numericality
     include Rein::Constraint::Presence
     include Rein::Constraint::PrimaryKey
+    include Rein::Constraint::Unique
     include Rein::Schema
     include Rein::Type::Enum
     include Rein::View
