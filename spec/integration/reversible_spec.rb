@@ -19,6 +19,12 @@ RSpec.describe 'Reversible' do
     expect(TableConstraint.where(constraint_name: 'books_author_id_fk')).to_not exist
   end
 
+  it 'reverses unique constraints' do
+    expect(TableConstraint.where(constraint_name: 'books_isbn_unique')).to exist
+    ActiveRecord::Migrator.down(MIGRATIONS_PATH, 2)
+    expect(TableConstraint.where(constraint_name: 'books_isbn_unique')).to_not exist
+  end
+
   it 'reverses inclusion constraints' do
     expect(TableConstraint.where(constraint_name: 'books_state_inclusion')).to exist
     ActiveRecord::Migrator.down(MIGRATIONS_PATH, 2)
