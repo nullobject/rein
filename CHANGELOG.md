@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.0
+- Add unique constraint.
+
 ## 3.2.0
 - Add match constraint.
 - Fix the rollback of change view migrations.
