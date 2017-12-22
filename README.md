@@ -20,6 +20,7 @@ advantage of reversible Rails migrations.
 * [Getting Started](#getting-started)
 * [Constraint Types](#constraint-types)
   * [Foreign Key Constraints](#foreign-key-constraints)
+  * [Unique Constraints](#unique-constraints)
   * [Inclusion Constraints](#inclusion-constraints)
   * [Length Constraints](#length-constraints)
   * [Match Constraints](#match-constraints)
@@ -109,6 +110,52 @@ To remove a foreign key constraint:
 
 ```ruby
 remove_foreign_key_constraint :books, :authors
+```
+
+### Unique Constraints
+
+A unique constraint specifies that certain columns in a table must be unique.
+
+For example, all the books should have unique ISBNs:
+
+```ruby
+add_unique_constraint :books, :isbn
+```
+
+By default, the database checks unique constraints immediately (i.e. as soon as
+a record is created or updated). If a record with a duplicate value exists,
+then the database will raise an error.
+
+Sometimes it is necessary to wait until the end of a transaction to do the
+checking (e.g. maybe you want to swap the ISBNs for two books). To do so, you
+need to tell the database to *defer* checking the constraint until the end of
+the current transaction:
+
+```sql
+BEGIN;
+SET CONSTRAINTS books_isbn_unique DEFERRED;
+UPDATE books SET isbn = 'foo' WHERE id = 1;
+UPDATE books SET isbn = 'bar' WHERE id = 2;
+COMMIT;
+```
+
+This [blog
+post](https://hashrocket.com/blog/posts/deferring-database-constraints) offers
+a good explanation of how to do this in a Rails app when using the
+`acts_as_list` plugin.
+
+If you *always* want to defer checking a unique constraint, then you can set
+the `deferred` option to `true`:
+
+```ruby
+add_unique_constraint :books, :isbn, deferred: true
+```
+
+If you really don't want the ability to optionally defer a unique constraint in
+a transaction, then you can set the `deferrable` option to `false`:
+
+```ruby
+add_unique_constraint :authors, :name, deferrable: false
 ```
 
 ### Inclusion Constraints
