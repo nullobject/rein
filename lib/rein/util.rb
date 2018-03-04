@@ -13,6 +13,10 @@ module Rein
       def self.constraint_name(table, attribute, suffix, options = {})
         options[:name].presence || "#{table}_#{attribute}_#{suffix}"
       end
+
+      def self.attribute_name(attribute)
+        "\"#{attribute}\""
+      end
     end
   end
 end

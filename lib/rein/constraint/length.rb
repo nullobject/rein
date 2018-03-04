@@ -31,6 +31,7 @@ module Rein
 
       def _add_length_constraint(table, attribute, options = {})
         name = Util.constraint_name(table, attribute, 'length', options)
+        attribute = Util.attribute_name(attribute)
         attribute_length = "length(#{attribute})"
         conditions = OPERATORS.slice(*options.keys).map { |key, operator|
           value = options[key]
