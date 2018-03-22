@@ -32,6 +32,7 @@ advantage of reversible Rails migrations.
 * [Views](#views)
 * [Schemas](#schemas)
 * [Examples](#examples)
+* [Contribute](#contribute)
 * [License](#license)
 
 ## Getting Started
@@ -500,13 +501,16 @@ end
 
 ## Contribute
 
-* Bundle all gems `bundle`
-* Create the test database `createdb -U <your postgresql username> rein_test`
-* Run the test suite `bundle exec rake`
-* Hack away
-* Rerun test suite
-* Create PR
+PRs are always welcome! :heart: To work with rein, there is a
+[Makefile](https://en.wikipedia.org/wiki/Makefile) to keep things simple.
 
+Before you do anything, you'll need to bootstrap your environment:
+
+    make config
+
+Make sure you run the tests before submitting a PR:
+
+    make test
 
 ## License
 
