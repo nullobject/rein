@@ -1,9 +1,9 @@
 addons:
-  postgresql: 9.5
+  postgresql: 9.6
 language: ruby
 gemfile:
   - gemfiles/activerecord_4.gemfile
   - gemfiles/activerecord_5.gemfile
-before_install: gem install bundler -v 1.14.5
+before_install: gem install bundler -v 1.16.1
 before_script: createdb -U postgres rein_test
 script: bundle exec rake test
