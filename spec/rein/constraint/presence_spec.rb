@@ -18,21 +18,21 @@ RSpec.describe Rein::Constraint::Presence do
   describe '#add_presence_constraint' do
     context 'given a table and attribute' do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_isbn_presence CHECK ((isbn IS NOT NULL) AND (isbn !~ '^\\s*$'))")
+        expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_isbn_presence CHECK ((\"isbn\" IS NOT NULL) AND (\"isbn\" !~ '^\\s*$'))")
         adapter.add_presence_constraint(:books, :isbn)
       end
     end
 
     context 'given a table and attribute and if option' do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_isbn_presence CHECK (NOT (state = 'published') OR ((isbn IS NOT NULL) AND (isbn !~ '^\\s*$')))")
+        expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_isbn_presence CHECK (NOT (state = 'published') OR ((\"isbn\" IS NOT NULL) AND (\"isbn\" !~ '^\\s*$')))")
         adapter.add_presence_constraint(:books, :isbn, if: "state = 'published'")
       end
     end
 
     context 'given a name option' do
       it 'adds a constraint with that name' do
-        expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_state_is_valid CHECK ((isbn IS NOT NULL) AND (isbn !~ '^\\s*$'))")
+        expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_state_is_valid CHECK ((\"isbn\" IS NOT NULL) AND (\"isbn\" !~ '^\\s*$'))")
         adapter.add_presence_constraint(:books, :isbn, name: 'books_state_is_valid')
       end
     end

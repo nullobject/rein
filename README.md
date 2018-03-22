@@ -498,6 +498,16 @@ class CreateArchivedBooksTable < ActiveRecord::Migration
 end
 ```
 
+## Contribute
+
+* Bundle all gems `bundle`
+* Create the test database `createdb -U <your postgresql username> rein_test`
+* Run the test suite `bundle exec rake`
+* Hack away
+* Rerun test suite
+* Create PR
+
+
 ## License
 
 Rein is licensed under the [MIT License](/LICENSE.md).

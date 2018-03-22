@@ -24,6 +24,7 @@ module Rein
 
       def _add_null_constraint(table, attribute, options = {})
         name = Util.constraint_name(table, attribute, 'null', options)
+        attribute = Util.attribute_name(attribute)
         conditions = Util.conditions_with_if("#{attribute} IS NOT NULL", options)
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end

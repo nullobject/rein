@@ -25,6 +25,7 @@ module Rein
       def _add_unique_constraint(table, attributes, options = {})
         attributes = [attributes].flatten
         name = Util.constraint_name(table, attributes.join('_'), 'unique', options)
+        attributes = attributes.map { |attribute| Util.attribute_name(attribute) }
         initially = options[:deferred] ? 'DEFERRED' : 'IMMEDIATE'
         sql = "ALTER TABLE #{table} ADD CONSTRAINT #{name} UNIQUE (#{attributes.join(', ')})"
         sql << " DEFERRABLE INITIALLY #{initially}" unless options[:deferrable] == false

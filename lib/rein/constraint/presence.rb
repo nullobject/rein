@@ -24,6 +24,7 @@ module Rein
 
       def _add_presence_constraint(table, attribute, options = {})
         name = Util.constraint_name(table, attribute, 'presence', options)
+        attribute = Util.attribute_name(attribute)
         conditions = Util.conditions_with_if(
           "(#{attribute} IS NOT NULL) AND (#{attribute} !~ '^\\s*$')",
           options

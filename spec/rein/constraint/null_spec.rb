@@ -18,21 +18,21 @@ RSpec.describe Rein::Constraint::Null do
   describe '#add_null_constraint' do
     context 'given a table and attribute' do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_isbn_null CHECK (isbn IS NOT NULL)')
+        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_isbn_null CHECK ("isbn" IS NOT NULL)')
         adapter.add_null_constraint(:books, :isbn)
       end
     end
 
     context 'given a table and attribute and if option' do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_isbn_null CHECK (NOT (state = 'published') OR (isbn IS NOT NULL))")
+        expect(adapter).to receive(:execute).with("ALTER TABLE books ADD CONSTRAINT books_isbn_null CHECK (NOT (state = 'published') OR (\"isbn\" IS NOT NULL))")
         adapter.add_null_constraint(:books, :isbn, if: "state = 'published'")
       end
     end
 
     context 'given a name option' do
       it 'adds a constraint with that name' do
-        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_isbn_is_valid CHECK (isbn IS NOT NULL)')
+        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_isbn_is_valid CHECK ("isbn" IS NOT NULL)')
         adapter.add_null_constraint(:books, :isbn, name: 'books_isbn_is_valid')
       end
     end
