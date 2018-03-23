@@ -31,7 +31,7 @@ module Rein
 
       def _add_numericality_constraint(table, attribute, options = {})
         name = Util.constraint_name(table, attribute, 'numericality', options)
-        attribute = Util.attribute_name(attribute)
+        attribute = Util.wrap_identifier(attribute)
         conditions = OPERATORS.slice(*options.keys).map { |key, operator|
           value = options[key]
           [attribute, operator, value].join(' ')

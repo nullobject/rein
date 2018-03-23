@@ -14,7 +14,7 @@ module Rein
         options[:name].presence || "#{table}_#{attribute}_#{suffix}"
       end
 
-      def self.attribute_name(attribute)
+      def self.wrap_identifier(attribute)
         "\"#{attribute}\""
       end
     end
