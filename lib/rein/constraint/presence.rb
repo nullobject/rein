@@ -23,9 +23,9 @@ module Rein
       private
 
       def _add_presence_constraint(table, attribute, options = {})
-        name = Util.constraint_name(table, attribute, 'presence', options)
-        attribute = Util.wrap_identifier(attribute)
-        conditions = Util.conditions_with_if(
+        name = Rein::Util.constraint_name(table, attribute, 'presence', options)
+        attribute = Rein::Util.wrap_identifier(attribute)
+        conditions = Rein::Util.conditions_with_if(
           "(#{attribute} IS NOT NULL) AND (#{attribute} !~ '^\\s*$')",
           options
         )
@@ -33,7 +33,7 @@ module Rein
       end
 
       def _remove_presence_constraint(table, attribute, options = {})
-        name = Util.constraint_name(table, attribute, 'presence', options)
+        name = Rein::Util.constraint_name(table, attribute, 'presence', options)
         execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
       end
     end

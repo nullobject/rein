@@ -30,19 +30,19 @@ module Rein
       private
 
       def _add_length_constraint(table, attribute, options = {})
-        name = Util.constraint_name(table, attribute, 'length', options)
-        attribute = Util.wrap_identifier(attribute)
+        name = Rein::Util.constraint_name(table, attribute, 'length', options)
+        attribute = Rein::Util.wrap_identifier(attribute)
         attribute_length = "length(#{attribute})"
         conditions = OPERATORS.slice(*options.keys).map { |key, operator|
           value = options[key]
           [attribute_length, operator, value].join(' ')
         }.join(' AND ')
-        conditions = Util.conditions_with_if(conditions, options)
+        conditions = Rein::Util.conditions_with_if(conditions, options)
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end
 
       def _remove_length_constraint(table, attribute, options = {})
-        name = Util.constraint_name(table, attribute, 'length', options)
+        name = Rein::Util.constraint_name(table, attribute, 'length', options)
         execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
       end
     end

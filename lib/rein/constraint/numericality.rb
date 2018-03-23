@@ -30,18 +30,18 @@ module Rein
       private
 
       def _add_numericality_constraint(table, attribute, options = {})
-        name = Util.constraint_name(table, attribute, 'numericality', options)
-        attribute = Util.wrap_identifier(attribute)
+        name = Rein::Util.constraint_name(table, attribute, 'numericality', options)
+        attribute = Rein::Util.wrap_identifier(attribute)
         conditions = OPERATORS.slice(*options.keys).map { |key, operator|
           value = options[key]
           [attribute, operator, value].join(' ')
         }.join(' AND ')
-        conditions = Util.conditions_with_if(conditions, options)
+        conditions = Rein::Util.conditions_with_if(conditions, options)
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end
 
       def _remove_numericality_constraint(table, attribute, options = {})
-        name = Util.constraint_name(table, attribute, 'numericality', options)
+        name = Rein::Util.constraint_name(table, attribute, 'numericality', options)
         execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
       end
     end

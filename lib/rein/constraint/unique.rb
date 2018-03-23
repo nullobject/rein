@@ -24,8 +24,8 @@ module Rein
 
       def _add_unique_constraint(table, attributes, options = {})
         attributes = [attributes].flatten
-        name = Util.constraint_name(table, attributes.join('_'), 'unique', options)
-        attributes = attributes.map { |attribute| Util.wrap_identifier(attribute) }
+        name = Rein::Util.constraint_name(table, attributes.join('_'), 'unique', options)
+        attributes = attributes.map { |attribute| Rein::Util.wrap_identifier(attribute) }
         initially = options[:deferred] ? 'DEFERRED' : 'IMMEDIATE'
         sql = "ALTER TABLE #{table} ADD CONSTRAINT #{name} UNIQUE (#{attributes.join(', ')})"
         sql << " DEFERRABLE INITIALLY #{initially}" unless options[:deferrable] == false
@@ -34,7 +34,7 @@ module Rein
 
       def _remove_unique_constraint(table, attributes, options = {})
         attributes = [attributes].flatten
-        name = Util.constraint_name(table, attributes.join('_'), 'unique', options)
+        name = Rein::Util.constraint_name(table, attributes.join('_'), 'unique', options)
         execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
       end
     end
