@@ -22,63 +22,63 @@ RSpec.describe Rein::Constraint::ForeignKey do
 
     context 'with no options' do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (id)')
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY ("person_id") REFERENCES people ("id")))
         adapter.add_foreign_key_constraint(:books, :people)
       end
     end
 
     context 'with a given referencing attribute' do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_author_id_fk FOREIGN KEY (author_id) REFERENCES people (id)')
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE books ADD CONSTRAINT books_author_id_fk FOREIGN KEY ("author_id") REFERENCES people ("id")))
         adapter.add_foreign_key_constraint(:books, :people, referencing: :author_id)
       end
     end
 
     context 'with a given referenced attribute' do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (person_id)')
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY ("person_id") REFERENCES people ("person_id")))
         adapter.add_foreign_key_constraint(:books, :people, referenced: :person_id)
       end
     end
 
     context 'with a given referencing attribute and referenced attribute' do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_author_id_fk FOREIGN KEY (author_id) REFERENCES people (person_id)')
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE books ADD CONSTRAINT books_author_id_fk FOREIGN KEY ("author_id") REFERENCES people ("person_id")))
         adapter.add_foreign_key_constraint(:books, :people, referencing: :author_id, referenced: :person_id)
       end
     end
 
     context 'with a given name' do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT foo FOREIGN KEY (person_id) REFERENCES people (id)')
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE books ADD CONSTRAINT foo FOREIGN KEY ("person_id") REFERENCES people ("id")))
         adapter.add_foreign_key_constraint(:books, :people, name: :foo)
       end
     end
 
     context 'with a given on delete referential action' do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE CASCADE')
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY ("person_id") REFERENCES people ("id") ON DELETE CASCADE))
         adapter.add_foreign_key_constraint(:books, :people, on_delete: :cascade)
       end
     end
 
     context 'with a given on update referential action' do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON UPDATE CASCADE')
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY ("person_id") REFERENCES people ("id") ON UPDATE CASCADE))
         adapter.add_foreign_key_constraint(:books, :people, on_update: :cascade)
       end
     end
 
     context "with a 'cascade' on delete and update referential action" do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE CASCADE ON UPDATE CASCADE')
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY ("person_id") REFERENCES people ("id") ON DELETE CASCADE ON UPDATE CASCADE))
         adapter.add_foreign_key_constraint(:books, :people, on_delete: :cascade, on_update: :cascade)
       end
     end
 
     context "with a 'no action' on delete and update referential action" do
       it 'adds a constraint' do
-        expect(adapter).to receive(:execute).with('ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE NO ACTION ON UPDATE NO ACTION')
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE books ADD CONSTRAINT books_person_id_fk FOREIGN KEY ("person_id") REFERENCES people ("id") ON DELETE NO ACTION ON UPDATE NO ACTION))
         adapter.add_foreign_key_constraint(:books, :people, on_delete: :no_action, on_update: :no_action)
       end
     end

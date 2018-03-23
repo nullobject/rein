@@ -27,8 +27,8 @@ module Rein
         name = Util.constraint_name(referencing_table, referencing_attribute, 'fk', options)
         sql = "ALTER TABLE #{referencing_table}"
         sql << " ADD CONSTRAINT #{name}"
-        sql << " FOREIGN KEY (#{referencing_attribute})"
-        sql << " REFERENCES #{referenced_table} (#{referenced_attribute})"
+        sql << " FOREIGN KEY (#{Util.attribute_name(referencing_attribute)})"
+        sql << " REFERENCES #{referenced_table} (#{Util.attribute_name(referenced_attribute)})"
         sql << " ON DELETE #{referential_action(options[:on_delete])}" if options[:on_delete].present?
         sql << " ON UPDATE #{referential_action(options[:on_update])}" if options[:on_update].present?
         execute(sql)
