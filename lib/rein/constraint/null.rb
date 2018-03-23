@@ -23,14 +23,16 @@ module Rein
       private
 
       def _add_null_constraint(table, attribute, options = {})
-        name = Rein::Util.constraint_name(table, attribute, 'null', options)
-        attribute = Rein::Util.wrap_identifier(attribute)
-        conditions = Rein::Util.conditions_with_if("#{attribute} IS NOT NULL", options)
+        name = Util.constraint_name(table, attribute, 'null', options)
+        table = Util.wrap_identifier(table)
+        attribute = Util.wrap_identifier(attribute)
+        conditions = Util.conditions_with_if("#{attribute} IS NOT NULL", options)
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end
 
       def _remove_null_constraint(table, attribute, options = {})
-        name = Rein::Util.constraint_name(table, attribute, 'null', options)
+        name = Util.constraint_name(table, attribute, 'null', options)
+        table = Util.wrap_identifier(table)
         execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
       end
     end

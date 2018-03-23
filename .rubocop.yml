@@ -8,7 +8,7 @@ Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
 Metrics/AbcSize:
-  Max: 27
+  Max: 28
 
 Metrics/BlockLength:
   ExcludedMethods: describe

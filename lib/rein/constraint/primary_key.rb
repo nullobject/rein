@@ -19,11 +19,13 @@ module Rein
       private
 
       def _add_primary_key(table, options = {})
+        table = Util.wrap_identifier(table)
         attribute = (options[:column] || 'id').to_sym
         execute("ALTER TABLE #{table} ADD PRIMARY KEY (#{attribute})")
       end
 
       def _remove_primary_key(table, options = {})
+        table = Util.wrap_identifier(table)
         attribute = (options[:column] || 'id').to_sym
         execute("ALTER TABLE #{table} DROP CONSTRAINT #{attribute}_pkey")
       end

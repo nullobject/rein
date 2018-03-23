@@ -28,18 +28,20 @@ module Rein
       private
 
       def _add_match_constraint(table, attribute, options = {})
-        name = Rein::Util.constraint_name(table, attribute, 'match', options)
-        attribute = Rein::Util.wrap_identifier(attribute)
+        name = Util.constraint_name(table, attribute, 'match', options)
+        table = Util.wrap_identifier(table)
+        attribute = Util.wrap_identifier(attribute)
         conditions = OPERATORS.slice(*options.keys).map { |key, operator|
           value = options[key]
           [attribute, operator, "'#{value}'"].join(' ')
         }.join(' AND ')
-        conditions = Rein::Util.conditions_with_if(conditions, options)
+        conditions = Util.conditions_with_if(conditions, options)
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end
 
       def _remove_match_constraint(table, attribute, options = {})
-        name = Rein::Util.constraint_name(table, attribute, 'match', options)
+        name = Util.constraint_name(table, attribute, 'match', options)
+        table = Util.wrap_identifier(table)
         execute("ALTER TABLE #{table} DROP CONSTRAINT #{name}")
       end
     end

@@ -24,8 +24,8 @@ module Rein
       def _add_foreign_key_constraint(referencing_table, referenced_table, options = {})
         referencing_attribute = (options[:referencing] || "#{referenced_table.to_s.singularize}_id").to_sym
         referenced_attribute = (options[:referenced] || 'id').to_sym
-        name = Rein::Util.constraint_name(referencing_table, referencing_attribute, 'fk', options)
-        sql = "ALTER TABLE #{referencing_table}"
+        name = Util.constraint_name(referencing_table, referencing_attribute, 'fk', options)
+        sql = "ALTER TABLE #{Util.wrap_identifier(referencing_table)}"
         sql << " ADD CONSTRAINT #{name}"
         sql << " FOREIGN KEY (#{Util.wrap_identifier(referencing_attribute)})"
         sql << " REFERENCES #{referenced_table} (#{Util.wrap_identifier(referenced_attribute)})"
@@ -37,8 +37,8 @@ module Rein
 
       def _remove_foreign_key_constraint(referencing_table, referenced_table, options = {})
         referencing_attribute = options[:referencing] || "#{referenced_table.to_s.singularize}_id".to_sym
-        name = Rein::Util.constraint_name(referencing_table, referencing_attribute, 'fk', options)
-        execute("ALTER TABLE #{referencing_table} DROP CONSTRAINT #{name}")
+        name = Util.constraint_name(referencing_table, referencing_attribute, 'fk', options)
+        execute("ALTER TABLE #{Util.wrap_identifier(referencing_table)} DROP CONSTRAINT #{name}")
         remove_index(referencing_table, referencing_attribute) if options[:index] == true
       end
 
