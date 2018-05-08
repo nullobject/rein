@@ -1,9 +1,9 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
 require 'rein'
 require 'support/migration'
 
-MIGRATIONS_PATH = [File.expand_path('../migrations', __FILE__)].freeze
+MIGRATIONS_PATH = [File.expand_path('migrations', __dir__)].freeze
 
 RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
