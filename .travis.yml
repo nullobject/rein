@@ -4,7 +4,7 @@ language: ruby
 gemfile:
   - gemfiles/activerecord_4.gemfile
   - gemfiles/activerecord_5.gemfile
-  - gemfiles/activerecord_52.gemfile
+  - gemfiles/activerecord_5_2.gemfile
 before_install: gem install bundler -v 1.16.1
 before_script: createdb -U postgres rein_test
 script: bundle exec rake test
