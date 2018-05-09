@@ -11,7 +11,8 @@ Metrics/AbcSize:
   Max: 28
 
 Metrics/BlockLength:
-  ExcludedMethods: describe
+  ExcludedMethods:
+    - describe
 
 Metrics/CyclomaticComplexity:
   Max: 7

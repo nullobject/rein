@@ -1,9 +1,9 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
 require 'rein'
 require 'support/migration'
 
-MIGRATIONS_PATH = [File.expand_path('../migrations', __FILE__)].freeze
+MIGRATIONS_PATH = [File.expand_path('migrations', __dir__)].freeze
 
 RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
@@ -26,6 +26,10 @@ RSpec.configure do |config|
     ActiveRecord::Base.connection.execute('DROP TABLE IF EXISTS schema_migrations')
     ActiveRecord::Base.connection.execute('DROP TABLE IF EXISTS books')
     ActiveRecord::Base.connection.execute('DROP TABLE IF EXISTS authors')
-    ActiveRecord::Migrator.migrate(MIGRATIONS_PATH)
+    if ActiveRecord.version.release < Gem::Version.new('5.2.0')
+      ActiveRecord::Migrator.migrate(MIGRATIONS_PATH)
+    else
+      ActiveRecord::MigrationContext.new(MIGRATIONS_PATH).migrate
+    end
   end
 end
