@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.5.0 / 2018-05-09
+
+  * Add support for ActiveRecord 5.2
+
 ## 3.4.0 / 2018-03-23
 
   * Wrap column and table names in foreign key constraints

@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    rein (3.4.0)
+    rein (3.5.0)
       activerecord (>= 4.0.0, < 6)
       activesupport (>= 4.0.0, < 6)
 
