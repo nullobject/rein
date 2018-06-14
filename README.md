@@ -28,6 +28,7 @@ advantage of reversible Rails migrations.
   * [Numericality Constraints](#numericality-constraints)
   * [Presence Constraints](#presence-constraints)
   * [Null Constraints](#null-constraints)
+  * [Check Constraints](#check-constraints)
 * [Data Types](#data-types)
   * [Enumerated Types](#enumerated-types)
 * [Views](#views)
@@ -421,6 +422,26 @@ To remove a null constraint:
 
 ```ruby
 remove_null_constraint :books, :due_date
+```
+
+### Check Constraints
+
+A check constraint lets you enforce any predicate about the current row.
+You can use this if none of the other higher-level constraint types work for you.
+
+For example, we can add a constraint to enforce that a book's title
+never starts with an "r":
+
+```ruby
+add_check_constraint :books, "substring(title FROM 1 FOR 1) IS DISTINCT FROM 'r'", name: 'no_r_titles'
+```
+
+Note these types must have a `name` option.
+
+To remove a check constraint:
+
+```ruby
+remove_check_constraint :books, "substring(title FROM 1 FOR 1) IS DISTINCT FROM 'r'", name: 'no_r_titles'
 ```
 
 ## Data Types
