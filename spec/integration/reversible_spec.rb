@@ -33,6 +33,12 @@ RSpec.describe 'Reversible' do
     Migrator.migrate
   end
 
+  it 'reverses check constraints' do
+    expect(TableConstraint.where(constraint_name: 'no_r_titles')).to exist
+    Migrator.down(2)
+    expect(TableConstraint.where(constraint_name: 'no_r_titles')).to_not exist
+  end
+
   it 'reverses foreign key constraints' do
     expect(TableConstraint.where(constraint_name: 'books_author_id_fk')).to exist
     Migrator.down(2)

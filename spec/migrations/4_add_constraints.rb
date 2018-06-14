@@ -1,5 +1,6 @@
 class AddConstraints < Migration
   def change
+    add_check_constraint :books, "substring(title FROM 1 FOR 1) IS DISTINCT FROM 'r'", name: 'no_r_titles'
     add_foreign_key_constraint :books, :authors, on_delete: :cascade, index: true
     add_unique_constraint :books, :isbn
     add_exclusion_constraint :book_owners, [[:book_id, '=']]
