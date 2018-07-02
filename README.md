@@ -21,6 +21,7 @@ advantage of reversible Rails migrations.
 * [Constraint Types](#constraint-types)
   * [Foreign Key Constraints](#foreign-key-constraints)
   * [Unique Constraints](#unique-constraints)
+  * [Exclusion Constraints](#exclusion-constraints)
   * [Inclusion Constraints](#inclusion-constraints)
   * [Length Constraints](#length-constraints)
   * [Match Constraints](#match-constraints)
@@ -157,6 +158,58 @@ a transaction, then you can set the `deferrable` option to `false`:
 
 ```ruby
 add_unique_constraint :authors, :name, deferrable: false
+```
+
+### Exclusion Constraints
+
+An exclusion constraint is a lot like a unique constraint, but more general.
+Whereas a unique constraint forbids two rows from having all constrained columns be *equal*,
+an exclusion constraint forbids two rows from having all constrained columns be *some relationship*,
+where the relationship is up to you (and can be different for each column).
+For instance you can prevent two ranges from overlapping with the `&&` operator.
+You can read more in 
+[the Postgres docs](https://www.postgresql.org/docs/9.0/static/ddl-constraints.html#DDL-CONSTRAINTS-EXCLUSION)
+or [a slideshow by the author, Jeff Davis](https://www.slideshare.net/pgconf/not-just-unique-exclusion-constraints).
+
+For example, no two people should own copyright to a book at the same time:
+
+```ruby
+add_exclusion_constraint :book_owners, [[:book_id, '='], [:owned_during, '&&']], using: :gist
+```
+
+By default, the database checks exclusion constraints immediately (i.e. as soon as
+a record is created or updated). If a record with an excluded value exists,
+then the database will raise an error.
+
+Sometimes it is necessary to wait until the end of a transaction to do the
+checking (e.g. maybe you want to move the date a copyright changed hands). To do so, you
+need to tell the database to *defer* checking the constraint until the end of
+the current transaction:
+
+```sql
+BEGIN;
+SET CONSTRAINTS book_owners_exclude DEFERRED;
+UPDATE book_owners
+  SET owned_during = tsrange(lower(owned_during), '1943-12-22')
+  WHERE book_id = 1 AND owner_id = 1;
+UPDATE book_owners
+  SET owned_during = tsrange('1943-12-22', upper(owned_during))
+  WHERE book_id = 1 AND owner_id = 2;
+COMMIT;
+```
+
+If you *always* want to defer checking a unique constraint, then you can set
+the `deferred` option to `true`:
+
+```ruby
+add_exclusion_constraint :book_owners, [[:book_id, '='], [:owned_during, '&&']], using: :gist, deferred: true
+```
+
+If you really don't want the ability to optionally defer a unique constraint in
+a transaction, then you can set the `deferrable` option to `false`:
+
+```ruby
+add_exclusion_constraint :book_owners, [[:book_id, '='], [:owned_during, '&&']], using: :gist, deferrable: false
 ```
 
 ### Inclusion Constraints
