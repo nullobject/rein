@@ -35,4 +35,11 @@ RSpec.describe Rein::Type::Enum do
       adapter.add_enum_value(:book_type, 'ebook')
     end
   end
+
+  describe '#drop_enum_type via change method on rollback' do
+    it 'drops an enum type' do
+      expect(adapter).to receive(:execute).with('DROP TYPE book_type')
+      adapter.drop_enum_type(:book_type, %w[paperback hardcover])
+    end
+  end
 end
