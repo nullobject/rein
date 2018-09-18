@@ -2,6 +2,7 @@ require 'spec_helper'
 
 class Author < ActiveRecord::Base; end
 class Book < ActiveRecord::Base; end
+class BookOwner < ActiveRecord::Base; end
 
 def create_book(attributes = {})
   attributes = {
@@ -13,6 +14,16 @@ def create_book(attributes = {})
   }.update(attributes)
 
   Book.create!(attributes)
+end
+
+def create_book_owner(attributes = {})
+  attributes = {
+    book_id: 1,
+    owned_during: Date.parse('1859-11-24')..Date.parse('1882-04-19'),
+    owner_id: 1
+  }.update(attributes)
+
+  BookOwner.create!(attributes)
 end
 
 RSpec.describe 'Constraints' do
@@ -41,6 +52,12 @@ RSpec.describe 'Constraints' do
       foo.update!(isbn: 'bar')
       bar.update!(isbn: 'foo')
     end
+  end
+
+  it 'raises an error if the book has two owners' do
+    expect { create_book_owner(book_id: 1, owner_id: 1) }.to_not raise_error
+    expect { create_book_owner(book_id: 2, owner_id: 2) }.to_not raise_error
+    expect { create_book_owner(book_id: 1, owner_id: 3) }.to raise_error(ActiveRecord::StatementInvalid, /PG::ExclusionViolation/)
   end
 
   it 'raises an error if the title is not present' do
