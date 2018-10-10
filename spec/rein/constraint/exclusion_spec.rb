@@ -50,6 +50,13 @@ RSpec.describe Rein::Constraint::Exclusion do
         adapter.add_exclusion_constraint(:book_owners, :book_id, '=', deferrable: false)
       end
     end
+
+    context 'given attribute options' do
+      it 'adds an constraint with attribute options to specific fields' do
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE "book_owners" ADD CONSTRAINT book_owners_book_id_exclude EXCLUDE ("book_id" gist_int8_ops WITH =) DEFERRABLE INITIALLY IMMEDIATE))
+        adapter.add_exclusion_constraint(:book_owners, [[:book_id, :gist_int8_ops, '=']])
+      end
+    end
   end
 
   describe '#remove_exclusion_constraint' do

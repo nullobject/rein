@@ -213,6 +213,12 @@ a transaction, then you can set the `deferrable` option to `false`:
 add_exclusion_constraint :book_owners, [[:book_id, '='], [:owned_during, '&&']], using: :gist, deferrable: false
 ```
 
+If you want to specify something like a operator class for a attribute specific attribute you can add it to the attribute specification between attribute name and the operator:
+
+```ruby
+add_exclusion_constraint :book_owners, [[:book_id, :gist_int8_ops, '='], [:owned_during, '&&']], using: :gist
+```
+
 ### Inclusion Constraints
 
 An inclusion constraint specifies the possible values that a column value can

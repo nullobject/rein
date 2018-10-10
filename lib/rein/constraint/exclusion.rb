@@ -42,13 +42,21 @@ module Rein
         name = Util.constraint_name(table, attributes.map { |att| att[0] }.join('_'), 'exclude', options)
         table = Util.wrap_identifier(table)
         attributes = attributes.map do |attribute|
-          "#{Util.wrap_identifier(attribute[0])} WITH #{attribute[1]}"
+          _get_attribute_expression(attribute)
         end
         initially = options[:deferred] ? 'DEFERRED' : 'IMMEDIATE'
         using = options[:using] ? " USING #{options[:using]}" : ''
         sql = "ALTER TABLE #{table} ADD CONSTRAINT #{name} EXCLUDE#{using} (#{attributes.join(', ')})"
         sql << " DEFERRABLE INITIALLY #{initially}" unless options[:deferrable] == false
         execute(sql)
+      end
+
+      def _get_attribute_expression(attribute)
+        if attribute.size > 2
+          "#{Util.wrap_identifier(attribute[0])} #{attribute[1, attribute.size - 2].join(' ')} WITH #{attribute.last}"
+        else
+          "#{Util.wrap_identifier(attribute[0])} WITH #{attribute[1]}"
+        end
       end
 
       def _remove_exclusion_constraint(table, attributes, options = {})
