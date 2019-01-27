@@ -70,12 +70,12 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 5.2.0)
   appraisal (~> 2.2)
-  bundler (~> 1.16)
   pg (~> 0.21)
+  bundler (~> 2.0)
   rake (~> 12.3)
   rein!
   rspec (~> 3.7)
   rubocop (~> 0.51)
 
 BUNDLED WITH
-   1.16.1
+   2.0.1
