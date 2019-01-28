@@ -18,10 +18,10 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'activerecord', '>= 4.0.0', '< 6'
   spec.add_runtime_dependency 'activesupport', '>= 4.0.0', '< 6'
 
-  spec.add_development_dependency 'appraisal', '~> 2.2'
-  spec.add_development_dependency 'pg', '~> 0.21'
-  spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_development_dependency 'rake', '~> 12.3'
-  spec.add_development_dependency 'rspec', '~> 3.7'
-  spec.add_development_dependency 'rubocop', '~> 0.51'
+  spec.add_development_dependency 'appraisal', '~> 2.2.0'
+  spec.add_development_dependency 'pg', '~> 0.21.0'
+  spec.add_development_dependency 'bundler', '~> 2.0.1'
+  spec.add_development_dependency 'rake', '~> 12.3.2'
+  spec.add_development_dependency 'rspec', '~> 3.8.0'
+  spec.add_development_dependency 'rubocop', '~> 0.63.1'
 end
