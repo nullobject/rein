@@ -18,9 +18,9 @@ RSpec.describe Rein::Constraint::Check do
   describe '#add_check_constraint' do
     context 'with no options' do
       it 'requires a name' do
-        expect {
+        expect do
           adapter.add_check_constraint(:books, "substring(title FROM 1 FOR 1) IS DISTINCT FROM 'r'")
-        }.to raise_error 'Generic CHECK constraints must have a name'
+        end.to raise_error('Generic CHECK constraints must have a name')
       end
     end
 
@@ -39,9 +39,9 @@ RSpec.describe Rein::Constraint::Check do
 
     context 'with no options' do
       it 'requires a name' do
-        expect {
+        expect do
           adapter.remove_check_constraint(:books, "substring(title FROM 1 FOR 1) IS DISTINCT FROM 'r'")
-        }.to raise_error 'Generic CHECK constraints must have a name'
+        end.to raise_error('Generic CHECK constraints must have a name')
       end
     end
 

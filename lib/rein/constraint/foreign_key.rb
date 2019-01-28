@@ -7,14 +7,14 @@ module Rein
     module ForeignKey
       def add_foreign_key_constraint(*args)
         reversible do |dir|
-          dir.up do _add_foreign_key_constraint(*args) end
+          dir.up { _add_foreign_key_constraint(*args) }
           dir.down { _remove_foreign_key_constraint(*args) }
         end
       end
 
       def remove_foreign_key_constraint(*args)
         reversible do |dir|
-          dir.up do _remove_foreign_key_constraint(*args) end
+          dir.up { _remove_foreign_key_constraint(*args) }
           dir.down { _add_foreign_key_constraint(*args) }
         end
       end

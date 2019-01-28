@@ -4,14 +4,14 @@ module Rein
     module PrimaryKey
       def add_primary_key(*args)
         reversible do |dir|
-          dir.up do _add_primary_key(*args) end
+          dir.up { _add_primary_key(*args) }
           dir.down { _remove_primary_key(*args) }
         end
       end
 
       def remove_primary_key(*args)
         reversible do |dir|
-          dir.up do _remove_primary_key(*args) end
+          dir.up { _remove_primary_key(*args) }
           dir.down { _add_primary_key(*args) }
         end
       end

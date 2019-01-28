@@ -7,14 +7,14 @@ module Rein
     module Check
       def add_check_constraint(*args)
         reversible do |dir|
-          dir.up do _add_check_constraint(*args) end
+          dir.up { _add_check_constraint(*args) }
           dir.down { _remove_check_constraint(*args) }
         end
       end
 
       def remove_check_constraint(*args)
         reversible do |dir|
-          dir.up do _remove_check_constraint(*args) end
+          dir.up { _remove_check_constraint(*args) }
           dir.down { _add_check_constraint(*args) }
         end
       end

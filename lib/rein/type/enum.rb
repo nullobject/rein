@@ -8,14 +8,14 @@ module Rein
 
       def create_enum_type(*args)
         reversible do |dir|
-          dir.up do _create_enum_type(*args) end
+          dir.up { _create_enum_type(*args) }
           dir.down { _drop_enum_type(*args) }
         end
       end
 
       def drop_enum_type(*args)
         reversible do |dir|
-          dir.up do _drop_enum_type(*args) end
+          dir.up { _drop_enum_type(*args) }
           dir.down { _create_enum_type(*args) }
         end
       end

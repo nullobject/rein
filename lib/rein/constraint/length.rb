@@ -15,14 +15,14 @@ module Rein
 
       def add_length_constraint(*args)
         reversible do |dir|
-          dir.up do _add_length_constraint(*args) end
+          dir.up { _add_length_constraint(*args) }
           dir.down { _remove_length_constraint(*args) }
         end
       end
 
       def remove_length_constraint(*args)
         reversible do |dir|
-          dir.up do _remove_length_constraint(*args) end
+          dir.up { _remove_length_constraint(*args) }
           dir.down { _add_length_constraint(*args) }
         end
       end
@@ -34,10 +34,10 @@ module Rein
         table = Util.wrap_identifier(table)
         attribute = Util.wrap_identifier(attribute)
         attribute_length = "length(#{attribute})"
-        conditions = OPERATORS.slice(*options.keys).map { |key, operator|
+        conditions = OPERATORS.slice(*options.keys).map do |key, operator|
           value = options[key]
           [attribute_length, operator, value].join(' ')
-        }.join(' AND ')
+        end.join(' AND ')
         conditions = Util.conditions_with_if(conditions, options)
         execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
       end

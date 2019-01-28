@@ -8,14 +8,14 @@ module Rein
 
       def add_exclusion_constraint(*args)
         reversible do |dir|
-          dir.up do _add_exclusion_constraint_adapter(*args) end
+          dir.up { _add_exclusion_constraint_adapter(*args) }
           dir.down { _remove_exclusion_constraint_adapter(*args) }
         end
       end
 
       def remove_exclusion_constraint(*args)
         reversible do |dir|
-          dir.up do _remove_exclusion_constraint_adapter(*args) end
+          dir.up { _remove_exclusion_constraint_adapter(*args) }
           dir.down { _add_exclusion_constraint_adapter(*args) }
         end
       end
@@ -41,9 +41,9 @@ module Rein
       def _add_exclusion_constraint(table, attributes, options = {})
         name = Util.constraint_name(table, attributes.map { |att| att[0] }.join('_'), 'exclude', options)
         table = Util.wrap_identifier(table)
-        attributes = attributes.map { |attribute|
+        attributes = attributes.map do |attribute|
           "#{Util.wrap_identifier(attribute[0])} WITH #{attribute[1]}"
-        }
+        end
         initially = options[:deferred] ? 'DEFERRED' : 'IMMEDIATE'
         using = options[:using] ? " USING #{options[:using]}" : ''
         sql = "ALTER TABLE #{table} ADD CONSTRAINT #{name} EXCLUDE#{using} (#{attributes.join(', ')})"

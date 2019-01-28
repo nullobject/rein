@@ -4,6 +4,9 @@ AllCops:
     - "gemfiles/**/*"
     - "rein.gemspec"
 
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
@@ -24,9 +27,6 @@ Metrics/MethodLength:
   Exclude:
     - "spec/**/*"
   Max: 11
-
-Style/BlockDelimiters:
-  EnforcedStyle: semantic
 
 Style/Documentation:
   Exclude:

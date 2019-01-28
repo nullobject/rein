@@ -8,14 +8,14 @@ module Rein
 
       def add_presence_constraint(*args)
         reversible do |dir|
-          dir.up do _add_presence_constraint(*args) end
+          dir.up { _add_presence_constraint(*args) }
           dir.down { _remove_presence_constraint(*args) }
         end
       end
 
       def remove_presence_constraint(*args)
         reversible do |dir|
-          dir.up do _remove_presence_constraint(*args) end
+          dir.up { _remove_presence_constraint(*args) }
           dir.down { _add_presence_constraint(*args) }
         end
       end

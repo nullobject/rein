@@ -8,14 +8,14 @@ module Rein
 
       def add_inclusion_constraint(*args)
         reversible do |dir|
-          dir.up do _add_inclusion_constraint(*args) end
+          dir.up { _add_inclusion_constraint(*args) }
           dir.down { _remove_inclusion_constraint(*args) }
         end
       end
 
       def remove_inclusion_constraint(*args)
         reversible do |dir|
-          dir.up do _remove_inclusion_constraint(*args) end
+          dir.up { _remove_inclusion_constraint(*args) }
           dir.down { _add_inclusion_constraint(*args) }
         end
       end
