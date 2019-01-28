@@ -1,7 +1,7 @@
 .PHONY: appraisal bundle config test
 
 appraisal:
-	@appraisal install
+	@bundle exec appraisal install
 
 bundle:
 	@bundle install
