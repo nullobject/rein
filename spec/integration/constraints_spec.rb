@@ -97,4 +97,8 @@ RSpec.describe 'Constraints' do
     expect { create_book(call_number: 'K' * 256) }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
     expect { create_book(call_number: 'KF8840 .F72 1999') }.to_not raise_error
   end
+
+  it 'raises an error if the title starts with an r' do
+    expect { create_book(title: 'r u okay') }.to raise_error(ActiveRecord::StatementInvalid, /PG::CheckViolation/)
+  end
 end
