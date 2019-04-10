@@ -33,11 +33,11 @@ GEM
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.2)
     minitest (5.11.3)
-    parallel (1.13.0)
-    parser (2.6.0.0)
+    parallel (1.17.0)
+    parser (2.6.2.1)
       ast (~> 2.4.0)
     pg (0.21.0)
-    powerpack (0.1.2)
+    psych (3.1.0)
     rainbow (3.0.0)
     rake (12.3.2)
     rspec (3.8.0)
@@ -53,20 +53,20 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
-    rubocop (0.63.1)
+    rubocop (0.67.2)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5, != 2.5.1.1)
-      powerpack (~> 0.1)
+      psych (>= 3.1.0)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (~> 1.4.0)
+      unicode-display_width (>= 1.4.0, < 1.6)
     ruby-progressbar (1.10.0)
     thor (0.20.3)
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    unicode-display_width (1.4.1)
+    unicode-display_width (1.5.0)
 
 PLATFORMS
   ruby
@@ -79,7 +79,7 @@ DEPENDENCIES
   rake (~> 12.3.2)
   rein!
   rspec (~> 3.8.0)
-  rubocop (~> 0.63.1)
+  rubocop (~> 0.67.2)
 
 BUNDLED WITH
    2.0.1
