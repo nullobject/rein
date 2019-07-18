@@ -47,6 +47,7 @@ module Rein
         initially = options[:deferred] ? 'DEFERRED' : 'IMMEDIATE'
         using = options[:using] ? " USING #{options[:using]}" : ''
         sql = "ALTER TABLE #{table} ADD CONSTRAINT #{name} EXCLUDE#{using} (#{attributes.join(', ')})"
+        sql << " WHERE (#{options[:where]})" if options[:where].present?
         sql << " DEFERRABLE INITIALLY #{initially}" unless options[:deferrable] == false
         execute(sql)
       end

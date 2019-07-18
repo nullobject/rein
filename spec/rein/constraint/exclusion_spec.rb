@@ -57,6 +57,13 @@ RSpec.describe Rein::Constraint::Exclusion do
         adapter.add_exclusion_constraint(:book_owners, [[:book_id, :gist_int8_ops, '=']])
       end
     end
+
+    context 'given a where option' do
+      it 'adds an contraint using a partial index' do
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE "book" ADD CONSTRAINT book_isbn_exclude EXCLUDE ("isbn" WITH =) WHERE (state='active') DEFERRABLE INITIALLY IMMEDIATE))
+        adapter.add_exclusion_constraint(:book, :isbn, '=', where: "state='active'")
+      end
+    end
   end
 
   describe '#remove_exclusion_constraint' do
