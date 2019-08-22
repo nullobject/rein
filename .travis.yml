@@ -5,6 +5,7 @@ gemfile:
   - gemfiles/activerecord_4.gemfile
   - gemfiles/activerecord_5.gemfile
   - gemfiles/activerecord_5_2.gemfile
-before_install: gem install bundler:2.0.1
+  - gemfiles/activerecord_6.gemfile
+before_install: gem install bundler:2.0.2
 before_script: createdb -U postgres rein_test
 script: bundle exec rake test
