@@ -164,13 +164,15 @@ add_unique_constraint :authors, :name, deferrable: false
 ### Exclusion Constraints
 
 An exclusion constraint is a lot like a unique constraint, but more general.
-Whereas a unique constraint forbids two rows from having all constrained columns be *equal*,
-an exclusion constraint forbids two rows from having all constrained columns be *some relationship*,
-where the relationship is up to you (and can be different for each column).
-For instance you can prevent two ranges from overlapping with the `&&` operator.
-You can read more in 
-[the Postgres docs](https://www.postgresql.org/docs/9.0/static/ddl-constraints.html#DDL-CONSTRAINTS-EXCLUSION)
-or [a slideshow by the author, Jeff Davis](https://www.slideshare.net/pgconf/not-just-unique-exclusion-constraints).
+Whereas a unique constraint forbids two rows from having all constrained
+columns be *equal*, an exclusion constraint forbids two rows from having all
+constrained columns be *some relationship*, where the relationship is up to you
+(and can be different for each column).  For instance you can prevent two
+ranges from overlapping with the `&&` operator.  You can read more in [the
+Postgres
+docs](https://www.postgresql.org/docs/9.0/static/ddl-constraints.html#DDL-CONSTRAINTS-EXCLUSION)
+or [a slideshow by the author, Jeff
+Davis](https://www.slideshare.net/pgconf/not-just-unique-exclusion-constraints).
 
 For example, no two people should own copyright to a book at the same time:
 
@@ -178,14 +180,14 @@ For example, no two people should own copyright to a book at the same time:
 add_exclusion_constraint :book_owners, [[:book_id, '='], [:owned_during, '&&']], using: :gist
 ```
 
-By default, the database checks exclusion constraints immediately (i.e. as soon as
-a record is created or updated). If a record with an excluded value exists,
+By default, the database checks exclusion constraints immediately (i.e. as soon
+as a record is created or updated). If a record with an excluded value exists,
 then the database will raise an error.
 
 Sometimes it is necessary to wait until the end of a transaction to do the
-checking (e.g. maybe you want to move the date a copyright changed hands). To do so, you
-need to tell the database to *defer* checking the constraint until the end of
-the current transaction:
+checking (e.g. maybe you want to move the date a copyright changed hands). To
+do so, you need to tell the database to *defer* checking the constraint until
+the end of the current transaction:
 
 ```sql
 BEGIN;
@@ -213,13 +215,16 @@ a transaction, then you can set the `deferrable` option to `false`:
 add_exclusion_constraint :book_owners, [[:book_id, '='], [:owned_during, '&&']], using: :gist, deferrable: false
 ```
 
-If you want to specify something like a operator class for a attribute specific attribute you can add it to the attribute specification between attribute name and the operator:
+If you want to specify something like a operator class for a attribute specific
+attribute, you can add it to the attribute specification between attribute name
+and the operator:
 
 ```ruby
 add_exclusion_constraint :book_owners, [[:book_id, :gist_int8_ops, '='], [:owned_during, '&&']], using: :gist
 ```
 
-If you want to set the constraint to a subset of the table you can use a where option to set the filter condition:
+If you want to set the constraint to a subset of the table, you can use a `where`
+option to set the filter condition:
 
 ```ruby
 add_exclusion_constraint :books, [[:isbn, '=']], using: :gist, where: "state='active'"
