@@ -1,4 +1,4 @@
-## Unreleased
+## 5.0.0 (2019-08-23)
 
 * Upgrade development deps
 * Add support for ActiveRecord 6
