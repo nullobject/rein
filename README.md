@@ -219,6 +219,12 @@ If you want to specify something like a operator class for a attribute specific 
 add_exclusion_constraint :book_owners, [[:book_id, :gist_int8_ops, '='], [:owned_during, '&&']], using: :gist
 ```
 
+If you want to set the constraint to a subset of the table you can use a where option to set the filter condition:
+
+```ruby
+add_exclusion_constraint :books, [[:isbn, '=']], using: :gist, where: "state='active'"
+```
+
 ### Inclusion Constraints
 
 An inclusion constraint specifies the possible values that a column value can
