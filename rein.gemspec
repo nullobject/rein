@@ -15,8 +15,8 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files --exclude-standard -z -- lib/* CHANGELOG.md LICENSE.md README.md`.split("\x0")
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'activerecord', '>= 4.0.0', '< 6'
-  spec.add_runtime_dependency 'activesupport', '>= 4.0.0', '< 6'
+  spec.add_runtime_dependency 'activerecord', '>= 4.0.0'
+  spec.add_runtime_dependency 'activesupport', '>= 4.0.0'
 
   spec.add_development_dependency 'appraisal', '~> 2.2.0'
   spec.add_development_dependency 'pg', '~> 0.21.0'

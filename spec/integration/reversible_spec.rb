@@ -12,18 +12,22 @@ module Migrator
   module_function
 
   def migrate
-    if ActiveRecord.version.release < Gem::Version.new('5.2.0')
-      ActiveRecord::Migrator.migrate(MIGRATIONS_PATH)
-    else
+    if ActiveRecord.version.release >= Gem::Version.new('6.0.0')
+      ActiveRecord::MigrationContext.new(MIGRATIONS_PATH, ActiveRecord::SchemaMigration).migrate
+    elsif ActiveRecord.version.release >= Gem::Version.new('5.2.0')
       ActiveRecord::MigrationContext.new(MIGRATIONS_PATH).migrate
+    else
+      ActiveRecord::Migrator.migrate(MIGRATIONS_PATH)
     end
   end
 
   def down(*args)
-    if ActiveRecord.version.release < Gem::Version.new('5.2.0')
-      ActiveRecord::Migrator.down(MIGRATIONS_PATH, *args)
-    else
+    if ActiveRecord.version.release >= Gem::Version.new('6.0.0')
+      ActiveRecord::MigrationContext.new(MIGRATIONS_PATH, ActiveRecord::SchemaMigration).down(*args)
+    elsif ActiveRecord.version.release >= Gem::Version.new('5.2.0')
       ActiveRecord::MigrationContext.new(MIGRATIONS_PATH).down(*args)
+    else
+      ActiveRecord::Migrator.down(MIGRATIONS_PATH, *args)
     end
   end
 end

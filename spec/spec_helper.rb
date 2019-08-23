@@ -26,10 +26,13 @@ RSpec.configure do |config|
     ActiveRecord::Base.connection.execute('DROP TABLE IF EXISTS schema_migrations')
     ActiveRecord::Base.connection.execute('DROP TABLE IF EXISTS books')
     ActiveRecord::Base.connection.execute('DROP TABLE IF EXISTS authors')
-    if ActiveRecord.version.release < Gem::Version.new('5.2.0')
-      ActiveRecord::Migrator.migrate(MIGRATIONS_PATH)
-    else
+    ActiveRecord::Base.connection.execute('DROP TABLE IF EXISTS book_owners')
+    if ActiveRecord.version.release >= Gem::Version.new('6.0.0')
+      ActiveRecord::MigrationContext.new(MIGRATIONS_PATH, ActiveRecord::SchemaMigration).migrate
+    elsif ActiveRecord.version.release >= Gem::Version.new('5.2.0')
       ActiveRecord::MigrationContext.new(MIGRATIONS_PATH).migrate
+    else
+      ActiveRecord::Migrator.migrate(MIGRATIONS_PATH)
     end
   end
 end
