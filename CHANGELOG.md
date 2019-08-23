@@ -2,6 +2,7 @@
 
 * Upgrade development deps
 * Add support for ActiveRecord 6
+* Add `where` option to exclusion constraints
 
 ## 4.0.0 (2019-01-28)
 
