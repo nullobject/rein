@@ -43,6 +43,13 @@ RSpec.describe Rein::Constraint::Inclusion do
         adapter.add_inclusion_constraint(:books, :state, in: [1, 2, 3])
       end
     end
+
+    context 'with a validate option of false' do
+      it 'adds a constraint with NOT VALID' do
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE "books" ADD CONSTRAINT books_state_inclusion CHECK ("state" IN (1, 2, 3)) NOT VALID))
+        adapter.add_inclusion_constraint(:books, :state, in: [1, 2, 3], validate: false)
+      end
+    end
   end
 
   describe '#remove_inclusion_constraint' do

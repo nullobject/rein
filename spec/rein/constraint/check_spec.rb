@@ -30,6 +30,13 @@ RSpec.describe Rein::Constraint::Check do
         adapter.add_check_constraint(:books, "substring(title FROM 1 FOR 1) IS DISTINCT FROM 'r'", name: 'no_r_titles')
       end
     end
+
+    context 'with a validate option of false' do
+      it 'adds a constraint with NOT VALID' do
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE "books" ADD CONSTRAINT "no_r_titles" CHECK (substring(title FROM 1 FOR 1) IS DISTINCT FROM 'r') NOT VALID))
+        adapter.add_check_constraint(:books, "substring(title FROM 1 FOR 1) IS DISTINCT FROM 'r'", name: 'no_r_titles', validate: false)
+      end
+    end
   end
 
   describe '#remove_check_constraint' do

@@ -78,6 +78,13 @@ RSpec.describe Rein::Constraint::Length do
         adapter.add_length_constraint(:books, :call_number, greater_than: 1, name: 'books_call_number_length')
       end
     end
+
+    context 'with a validate option of false' do
+      it 'adds a constraint with NOT VALID' do
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE "books" ADD CONSTRAINT books_call_number_length CHECK (length("call_number") > 1) NOT VALID))
+        adapter.add_length_constraint(:books, :call_number, greater_than: 1, name: 'books_call_number_length', validate: false)
+      end
+    end
   end
 
   describe '#remove_length_constraint' do

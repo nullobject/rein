@@ -36,6 +36,13 @@ RSpec.describe Rein::Constraint::Null do
         adapter.add_null_constraint(:books, :isbn, name: 'books_isbn_is_valid')
       end
     end
+
+    context 'given a validate option of false' do
+      it 'adds a constraint with NOT VALID' do
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE "books" ADD CONSTRAINT books_isbn_null CHECK ("isbn" IS NOT NULL) NOT VALID))
+        adapter.add_null_constraint(:books, :isbn, validate: false)
+      end
+    end
   end
 
   describe '#remove_null_constraint' do

@@ -10,6 +10,7 @@ require 'rein/constraint/presence'
 require 'rein/constraint/primary_key'
 require 'rein/constraint/unique'
 require 'rein/constraint/exclusion'
+require 'rein/constraint/validate'
 require 'rein/schema'
 require 'rein/type/enum'
 require 'rein/view'
@@ -27,6 +28,7 @@ module ActiveRecord
     include Rein::Constraint::PrimaryKey
     include Rein::Constraint::Unique
     include Rein::Constraint::Exclusion
+    include Rein::Constraint::Validate
     include Rein::Schema
     include Rein::Type::Enum
     include Rein::View

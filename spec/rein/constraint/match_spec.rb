@@ -50,6 +50,13 @@ RSpec.describe Rein::Constraint::Match do
         adapter.add_match_constraint(:books, :title, accepts: '\A[a-z0-9]*\Z', name: 'books_title_is_valid')
       end
     end
+
+    context 'with a validate option of false' do
+      it 'adds a constraint with NOT VALID' do
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE "books" ADD CONSTRAINT books_title_is_valid CHECK (\"title\" ~ '\\A[a-z0-9]*\\Z') NOT VALID))
+        adapter.add_match_constraint(:books, :title, accepts: '\A[a-z0-9]*\Z', name: 'books_title_is_valid', validate: false)
+      end
+    end
   end
 
   describe '#remove_match_constraint' do

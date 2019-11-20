@@ -31,7 +31,7 @@ module Rein
         sql << " REFERENCES #{referenced_table} (#{Util.wrap_identifier(referenced_attribute)})"
         sql << " ON DELETE #{referential_action(options[:on_delete])}" if options[:on_delete].present?
         sql << " ON UPDATE #{referential_action(options[:on_update])}" if options[:on_update].present?
-        execute(sql)
+        execute(Util.add_not_valid_suffix_if_required(sql, options))
         add_index(referencing_table, referencing_attribute) if options[:index] == true
       end
 

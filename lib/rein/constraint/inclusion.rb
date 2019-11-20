@@ -28,7 +28,12 @@ module Rein
         values = options[:in].map { |value| quote(value) }.join(', ')
         attribute = Util.wrap_identifier(attribute)
         conditions = Util.conditions_with_if("#{attribute} IN (#{values})", options)
-        execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
+        execute(
+          Util.add_not_valid_suffix_if_required(
+            "ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})",
+            options
+          )
+        )
       end
 
       def _remove_inclusion_constraint(table, attribute, options = {})

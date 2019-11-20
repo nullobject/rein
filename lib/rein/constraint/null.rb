@@ -27,7 +27,12 @@ module Rein
         table = Util.wrap_identifier(table)
         attribute = Util.wrap_identifier(attribute)
         conditions = Util.conditions_with_if("#{attribute} IS NOT NULL", options)
-        execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
+        execute(
+          Util.add_not_valid_suffix_if_required(
+            "ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})",
+            options
+          )
+        )
       end
 
       def _remove_null_constraint(table, attribute, options = {})
