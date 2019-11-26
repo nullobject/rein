@@ -38,12 +38,8 @@ module Rein
           [attribute, operator, value].join(' ')
         end.join(' AND ')
         conditions = Util.conditions_with_if(conditions, options)
-        execute(
-          Util.add_not_valid_suffix_if_required(
-            "ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})",
-            options
-          )
-        )
+        sql = "ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})"
+        execute(Util.add_not_valid_suffix_if_required(sql, options))
       end
 
       def _remove_numericality_constraint(table, attribute, options = {})

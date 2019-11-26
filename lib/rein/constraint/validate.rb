@@ -15,7 +15,9 @@ module Rein
         end
       end
 
-      private def _validate_table_constraint(table, constraint_name)
+      private
+
+      def _validate_table_constraint(table, constraint_name)
         execute("ALTER TABLE #{Util.wrap_identifier(table)} VALIDATE CONSTRAINT #{constraint_name}")
       end
     end
