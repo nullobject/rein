@@ -74,12 +74,12 @@ The table below summarises the constraint operations provided by Rein and whethe
 | Unique | `add_unique_constraint` | `UNIQUE` | no |
 | Exclusion | `add_exclusion_constraint` | `EXCLUDE` | no |
 | Inclusion | `add_inclusion_constraint` | `CHECK` | yes |
-| Length | `add_length_constraint` | `CHECK]` | yes |
-| Match | `add_match_constraint` | `CHECK]` | yes |
-| Numericality | `add_numericality_constraint` | `CHECK]` | yes |
-| Presence | `add_presence_constraint` | `CHECK]` | yes |
-| Null | `add_null_constraint` | `CHECK]` | yes |
-| Check | `add_check_constraint` | `CHECK]` | yes |
+| Length | `add_length_constraint` | `CHECK` | yes |
+| Match | `add_match_constraint` | `CHECK` | yes |
+| Numericality | `add_numericality_constraint` | `CHECK` | yes |
+| Presence | `add_presence_constraint` | `CHECK` | yes |
+| Null | `add_null_constraint` | `CHECK` | yes |
+| Check | `add_check_constraint` | `CHECK` | yes |
 
 ### Foreign Key Constraints
 
@@ -482,11 +482,11 @@ remove_check_constraint :books, "substring(title FROM 1 FOR 1) IS DISTINCT FROM 
 
 ### Validate Constraints
 
-Adding a constraint can be a very costly operation, especially on larger tables, as the database has to scan all rows in the table to check for violations of the new constraint. During this time, concurrent writes are blocked as an [`ACCESS EXCLUSIVE`](https://www.postgresql.org/docs/current/explicit-locking.html#LOCKING-TABLES) lock is taken. In addition, adding a foreign key constraint obtains a `SHARE ROW EXCLUSIVE` lock on the referenced table. See the [docs](https://www.postgresql.org/docs/current/sql-altertable.html#SQL-ALTERTABLE-NOTES) for more details.
+Adding a constraint can be a very costly operation, especially on larger tables, as the database has to scan all rows in the table to check for violations of the new constraint. During this time, concurrent writes are blocked as an [`ACCESS EXCLUSIVE`](https://www.postgresql.org/docs/current/explicit-locking.html#LOCKING-TABLES) table lock is taken. In addition, adding a foreign key constraint obtains a `SHARE ROW EXCLUSIVE` lock on the referenced table. See the [docs](https://www.postgresql.org/docs/current/sql-altertable.html#SQL-ALTERTABLE-NOTES) for more details.
 
 In order to allow constraints to be added concurrently on larger tables, and to allow the addition of constraints on tables containing rows with existing violations, Postgres supports adding constraints using the `NOT VALID` option (currently only for `CHECK` and foreign key constraints).
 
-This allows the constraint to be added immediately, without validating existing rows, but enforcing the constraint for any new rows and updates. After that, a `VALIDATE CONSTRAINT` command can be issued to verify that existing rows satisfy the constraint, which is done in a way that does not lock out concurrent updates.
+This allows the constraint to be added immediately, without validating existing rows, but enforcing the constraint for any new rows and updates. After that, a `VALIDATE CONSTRAINT` command can be issued to verify that existing rows satisfy the constraint, which is done in a way that does not lock out concurrent updates and "with the least impact on other work".
 
 Rein supports adding `CHECK` and foreign key constraints with the `NOT VALID` option by passing `validate: false` to the options of the supported Rein DSL methods, [summarised above](#summary).
 
@@ -500,7 +500,11 @@ With Rails 5.2 or later, you can use [`validate_constraint`](https://api.rubyonr
 validate_table_constraint :books, "no_r_titles"
 ```
 
-It's safe (a no-op) to validate a constraint that is already marked as valid.
+It is safe (a no-op) to validate a constraint that is already marked as valid.
+
+### Side note on `lock_timeout`
+
+It's advisable to set a [sensibly low `lock_timeout`](https://gocardless.com/blog/zero-downtime-postgres-migrations-the-hard-parts/) in your database migrations, otherwise existing long running transactions can prevent your migration from acquiring the required locks, resulting in a lock queue that grinds your production database to a halt.
 
 ## Data Types
 
