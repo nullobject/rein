@@ -19,6 +19,7 @@ advantage of reversible Rails migrations.
 
 * [Getting Started](#getting-started)
 * [Constraint Types](#constraint-types)
+  * [Summary](#summary)
   * [Foreign Key Constraints](#foreign-key-constraints)
   * [Unique Constraints](#unique-constraints)
   * [Exclusion Constraints](#exclusion-constraints)
@@ -29,6 +30,7 @@ advantage of reversible Rails migrations.
   * [Presence Constraints](#presence-constraints)
   * [Null Constraints](#null-constraints)
   * [Check Constraints](#check-constraints)
+  * [Validate Constraints](#validate-constraints)
 * [Data Types](#data-types)
   * [Enumerated Types](#enumerated-types)
 * [Views](#views)
@@ -61,6 +63,23 @@ end
 ```
 
 ## Constraint Types
+
+### Summary
+
+The table below summarises the constraint operations provided by Rein and whether they support [validation](#validate-constraints).
+
+| Rein name   | Rein method | SQL | Supports `NOT VALID`? |
+| ----------- | ----------- | --- | --------------------- |
+| Foreign Key | `add_foreign_key_constraint` | `FOREIGN KEY` | yes |
+| Unique | `add_unique_constraint` | `UNIQUE` | no |
+| Exclusion | `add_exclusion_constraint` | `EXCLUDE` | no |
+| Inclusion | `add_inclusion_constraint` | `CHECK` | yes |
+| Length | `add_length_constraint` | `CHECK` | yes |
+| Match | `add_match_constraint` | `CHECK` | yes |
+| Numericality | `add_numericality_constraint` | `CHECK` | yes |
+| Presence | `add_presence_constraint` | `CHECK` | yes |
+| Null | `add_null_constraint` | `CHECK` | yes |
+| Check | `add_check_constraint` | `CHECK` | yes |
 
 ### Foreign Key Constraints
 
@@ -460,6 +479,32 @@ To remove a check constraint:
 ```ruby
 remove_check_constraint :books, "substring(title FROM 1 FOR 1) IS DISTINCT FROM 'r'", name: 'no_r_titles'
 ```
+
+### Validate Constraints
+
+Adding a constraint can be a very costly operation, especially on larger tables, as the database has to scan all rows in the table to check for violations of the new constraint. During this time, concurrent writes are blocked as an [`ACCESS EXCLUSIVE`](https://www.postgresql.org/docs/current/explicit-locking.html#LOCKING-TABLES) table lock is taken. In addition, adding a foreign key constraint obtains a `SHARE ROW EXCLUSIVE` lock on the referenced table. See the [docs](https://www.postgresql.org/docs/current/sql-altertable.html#SQL-ALTERTABLE-NOTES) for more details.
+
+In order to allow constraints to be added concurrently on larger tables, and to allow the addition of constraints on tables containing rows with existing violations, Postgres supports adding constraints using the `NOT VALID` option (currently only for `CHECK` and foreign key constraints).
+
+This allows the constraint to be added immediately, without validating existing rows, but enforcing the constraint for any new rows and updates. After that, a `VALIDATE CONSTRAINT` command can be issued to verify that existing rows satisfy the constraint, which is done in a way that does not lock out concurrent updates and "with the least impact on other work".
+
+Rein supports adding `CHECK` and foreign key constraints with the `NOT VALID` option by passing `validate: false` to the options of the supported Rein DSL methods, [summarised above](#summary).
+
+```ruby
+add_null_constraint :books, :due_date, if: "state = 'on_loan'", validate: false
+```
+
+With Rails 5.2 or later, you can use [`validate_constraint`](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/PostgreSQL/SchemaStatements.html#method-i-validate_constraint) in a subsequent migration to validate a `NOT VALID` constraint. If you are using versions of Rails below 5.2, you can use Rein's `validate_table_constraint` method:
+
+```ruby
+validate_table_constraint :books, "no_r_titles"
+```
+
+It's safe (a no-op) to validate a constraint that is already marked as valid.
+
+### Side note on `lock_timeout`
+
+It's advisable to set a [sensibly low `lock_timeout`](https://gocardless.com/blog/zero-downtime-postgres-migrations-the-hard-parts/) in your database migrations, otherwise existing long-running transactions can prevent your migration from acquiring the required locks, resulting in a lock queue that prevents even selects on the target table, potentially brining your production database grinding to a halt.
 
 ## Data Types
 

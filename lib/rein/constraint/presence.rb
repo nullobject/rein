@@ -30,7 +30,8 @@ module Rein
           "(#{attribute} IS NOT NULL) AND (#{attribute} !~ '^\\s*$')",
           options
         )
-        execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
+        sql = "ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})"
+        execute(Util.add_not_valid_suffix_if_required(sql, options))
       end
 
       def _remove_presence_constraint(table, attribute, options = {})

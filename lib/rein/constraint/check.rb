@@ -27,7 +27,7 @@ module Rein
         sql = "ALTER TABLE #{Util.wrap_identifier(table_name)}"
         sql << " ADD CONSTRAINT #{name}"
         sql << " CHECK (#{predicate})"
-        execute(sql)
+        execute(Util.add_not_valid_suffix_if_required(sql, options))
       end
 
       def _remove_check_constraint(table_name, _predicate, options = {})

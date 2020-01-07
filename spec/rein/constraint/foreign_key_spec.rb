@@ -83,6 +83,13 @@ RSpec.describe Rein::Constraint::ForeignKey do
       end
     end
 
+    context 'with a validate option of false' do
+      it 'adds a constraint with NOT VALID' do
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE "books" ADD CONSTRAINT books_person_id_fk FOREIGN KEY ("person_id") REFERENCES people ("id") ON DELETE NO ACTION ON UPDATE NO ACTION NOT VALID))
+        adapter.add_foreign_key_constraint(:books, :people, on_delete: :no_action, on_update: :no_action, validate: false)
+      end
+    end
+
     describe 'with an index option' do
       it 'adds a constraint' do
         expect(adapter).to receive(:add_index).with(:books, :person_id)

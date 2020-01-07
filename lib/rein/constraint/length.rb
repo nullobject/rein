@@ -39,7 +39,8 @@ module Rein
           [attribute_length, operator, value].join(' ')
         end.join(' AND ')
         conditions = Util.conditions_with_if(conditions, options)
-        execute("ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})")
+        sql = "ALTER TABLE #{table} ADD CONSTRAINT #{name} CHECK (#{conditions})"
+        execute(Util.add_not_valid_suffix_if_required(sql, options))
       end
 
       def _remove_length_constraint(table, attribute, options = {})

@@ -36,6 +36,13 @@ RSpec.describe Rein::Constraint::Presence do
         adapter.add_presence_constraint(:books, :isbn, name: 'books_state_is_valid')
       end
     end
+
+    context 'given a validate option of false' do
+      it 'adds a constraint with NOT VALID' do
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE "books" ADD CONSTRAINT books_state_is_valid CHECK ((\"isbn\" IS NOT NULL) AND (\"isbn\" !~ '^\\s*$')) NOT VALID))
+        adapter.add_presence_constraint(:books, :isbn, name: 'books_state_is_valid', validate: false)
+      end
+    end
   end
 
   describe '#remove_presence_constraint' do
