@@ -504,7 +504,7 @@ It's safe (a no-op) to validate a constraint that is already marked as valid.
 
 ### Side note on `lock_timeout`
 
-It's advisable to set a [sensibly low `lock_timeout`](https://gocardless.com/blog/zero-downtime-postgres-migrations-the-hard-parts/) in your database migrations, otherwise existing long-running transactions can prevent your migration from acquiring the required locks, resulting in a lock queue that prevents even selects on the target table, potentially brining your production database grinding to a halt.
+It's advisable to set a [sensibly low `lock_timeout`](https://gocardless.com/blog/zero-downtime-postgres-migrations-the-hard-parts/) in your database migrations, otherwise existing long-running transactions can prevent your migration from acquiring the required locks, resulting in a lock queue that prevents even selects on the target table, potentially bringing your production database grinding to a halt.
 
 ## Data Types
 
