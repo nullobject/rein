@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 5.1.0 (2020-01-08)
+
 * Add validate option to foreign key and check constraints
 
 ## 5.0.0 (2019-08-23)
