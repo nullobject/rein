@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'appraisal', '~> 2.2.0'
   spec.add_development_dependency 'pg', '~> 0.21.0'
-  spec.add_development_dependency 'bundler', '~> 2.0.1'
+  spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 12.3.2'
   spec.add_development_dependency 'rspec', '~> 3.8.0'
   spec.add_development_dependency 'rubocop', '~> 0.67.2'
