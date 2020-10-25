@@ -1,5 +1,7 @@
 ## Unreleased
 
+* Add `accepts_case_insensitive` and `rejects_case_insensitive` options to match constraints
+
 ## 5.1.0 (2020-01-08)
 
 * Add validate option to foreign key and check constraints

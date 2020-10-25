@@ -344,6 +344,10 @@ characters, but not ampersands:
 add_match_constraint :books, :title, accepts: '\A[ -~]*\Z', rejects: '&'
 ```
 
+Match constraints are case-sensitive. You make them case-insensitive by using 
+`accepts_case_insensitive` and `rejects_case_insensitive` instead of `accepts` 
+or `rejects`.
+
 If you only want to enforce the constraint under certain conditions,
 you can pass an optional `if` option:
 
