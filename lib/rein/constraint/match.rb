@@ -8,7 +8,9 @@ module Rein
 
       OPERATORS = {
         accepts: :~,
-        rejects: :"!~"
+        accepts_case_insensitive: :"~*",
+        rejects: :"!~",
+        rejects_case_insensitive: :"!~*"
       }.freeze
 
       def add_match_constraint(*args)

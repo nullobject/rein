@@ -30,10 +30,24 @@ RSpec.describe Rein::Constraint::Match do
       end
     end
 
+    context 'accept_case_insensitive' do
+      it 'adds a constraint' do
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE "books" ADD CONSTRAINT books_title_match CHECK (\"title\" ~* '\\A[a-z0-9]*\\Z')))
+        adapter.add_match_constraint(:books, :title, accepts_case_insensitive: '\A[a-z0-9]*\Z')
+      end
+    end
+
     context 'reject' do
       it 'adds a constraint' do
         expect(adapter).to receive(:execute).with(%(ALTER TABLE "books" ADD CONSTRAINT books_title_match CHECK (\"title\" !~ '\\A[a-z0-9]*\\Z')))
         adapter.add_match_constraint(:books, :title, rejects: '\A[a-z0-9]*\Z')
+      end
+    end
+
+    context 'reject_case_insensitive' do
+      it 'adds a constraint' do
+        expect(adapter).to receive(:execute).with(%(ALTER TABLE "books" ADD CONSTRAINT books_title_match CHECK (\"title\" !~* '\\A[a-z0-9]*\\Z')))
+        adapter.add_match_constraint(:books, :title, rejects_case_insensitive: '\A[a-z0-9]*\Z')
       end
     end
 
